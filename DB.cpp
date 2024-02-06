@@ -33,12 +33,14 @@ void DB::open(string filename)
     cout << "File is already open. Close before trying again.\n";
   }
   else
-  Din.open(filename.c_str(), fstream::in | fstream::out | fstream::app);
+  { Din.open(filename.c_str(), fstream::in | fstream::out | fstream::app);
+     openStatus = true; }
 }
 
 void DB::close()
 {
   Din.close();
+    openStatus = false;
 }
 
 /**

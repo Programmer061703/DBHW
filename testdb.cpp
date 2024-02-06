@@ -105,7 +105,8 @@ int recordNum = 0;
    Din.open("config.data");
     ConfigOut.open("config.data");
     ConfigOut << recordNum << " " << recordSize;
-    ConfigOut.close();
+   Din.close();
+   Dout.close();
 }
 void menu(){
 
