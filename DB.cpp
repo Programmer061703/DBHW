@@ -28,6 +28,11 @@ void DB::open(string filename)
   num_records = NUM_RECORDS;
 
   // Open file in read/write mode
+  if (openStatus == true)
+  {
+    cout << "File is already open. Close before trying again.\n";
+  }
+  else
   Din.open(filename.c_str(), fstream::in | fstream::out | fstream::app);
 }
 

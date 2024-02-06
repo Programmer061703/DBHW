@@ -26,6 +26,7 @@ public:
   //const static int RECORD_SIZE = 72;  // Windows record size
   const static int RECORD_SIZE = 71;    // linux record size
   const static int NUM_RECORDS = 20;
+  bool openStatus = false || true;
 
   DB();
   ~DB();
