@@ -4,7 +4,7 @@
 using namespace std;
 
 //set the max limit
-const int Id_size=5;
+const int Id_size=6;
 const int lName_size=12;
 const int fName_size=16;
 const int Age_size=5;
@@ -80,7 +80,6 @@ int recordNum = 0;
 
    Din.open (inFilename+".csv");
    Dout.open (inFilename+".data");
-   getline (Din, Id, ',');  // try to read an id
    while (!Din.eof())  
    {
      //read record
