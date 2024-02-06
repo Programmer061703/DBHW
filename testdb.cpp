@@ -126,13 +126,7 @@ int main(int argc, char const *argv[])
   string filename;
   DB db; 
   int lineNum;
-  string Id = "ID";
-  string lName = "LAST_NAME";
-  string fName = "FIRST_NAME";
-  string Age = "AGE";
-  string Ticket = "TICKET_NUM";
-  string Fare = "FARE";
-  string Date = "DATE_OF_PURCHASE";
+  string Id, lName, fName, Age, Ticket, Fare, Date;
 
 
     while(x != 1){
@@ -155,7 +149,7 @@ int main(int argc, char const *argv[])
                 cout << "Open Database" << endl;
                 cout << "Input File Name"<< endl;
                 cin >> filename;
-                db.open(filename);
+                db.open(filename + ".data");
                 break;
             case 3:
                 cout << "Close Database" << endl;
@@ -163,8 +157,15 @@ int main(int argc, char const *argv[])
                 break;
             case 4:
                 cout << "Display Record" << endl;
+                cout << "Enter Record Number: ";
                 cin >> lineNum;
-                db.readRecord(lineNum, Id, lName, fName, Age, Ticket, Fare, Date);
+                if (db.readRecord(lineNum, Id, lName, fName, Age, Ticket, Fare, Date))
+                    cout << "recordNum: " << lineNum << ", Id: " << Id
+                        << ", Last Name: " << lName << ", First Name: " << fName
+                        << ", Age: " << Age << ", Ticket: " << Ticket
+                        << ", Fare:" << Fare << ", Date:" << Date << "\n\n";
+                else
+                    cout << "Could not get record " << lineNum << ".\n\n";
                 break;
             case 5:
                 cout << "Create Report" << endl;
