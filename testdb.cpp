@@ -4,13 +4,33 @@
 using namespace std;
 
 //set the max limit
-const int Id_size=3;
-const int lName_size=11;
+const int Id_size=5;
+const int lName_size=12;
 const int fName_size=16;
-const int Age_size=3;
-const int Ticket_size=11;
+const int Age_size=5;
+const int Ticket_size=17;
 const int Fare_size=6;
 const int Date_size=9;
+
+// Replace Spaces with Underscores
+void replaceSpaces(string &str) {
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] == ' ') {
+            str[i] = '_';
+        }
+    }
+}
+
+// Replace Underscores with Spaces
+
+void replaceUnderscores(string &str) {
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] == '_') {
+            str[i] = ' ';
+        }
+    }
+}
+
 
 
 
@@ -30,7 +50,7 @@ void writeRecord(ofstream &Dout, const string &Id, const string lName, const str
     // Write Fare
     Dout << setw(Fare_size) << left << Fare.substr(0, Fare_size);
     // Write Date
-    Dout << setw(Date_size) << left << Date.substr(0, Date_size);
+    Dout << setw(Date_size) << left << Date.substr(0, Date_size)<<endl;
 
 
     
@@ -57,21 +77,25 @@ string Date = "DATE_OF_PURCHASE";
    while (!Din.eof())  
    {
       // read rest of the line
-     getline (Din, Id, ',');
+     
      getline (Din, lName, ',');
      getline (Din, fName, ',');
      getline (Din, Age, ',');
      getline (Din, Ticket, ',');
      getline (Din, Fare, ',');
-     getline (Din, Date, '\n');
+     getline (Din, Date);
 
 
+
+      // Replace spaces with underscores
+      replaceSpaces(fName);
+      replaceSpaces(Ticket);
 
       //write record
       writeRecord (Dout, Id, lName, fName, Age, Ticket, Fare, Date);
 
       //write an empty record
-      writeRecord (Dout, "","","","","","","");
+      writeRecord (Dout, "NA","NA","NA","NA","NA","NA","NA");
 
       getline (Din, Id, ',');  // Try to read the next line
    }
@@ -105,6 +129,7 @@ int main(int argc, char const *argv[])
   DB db; 
 
 
+
     while(x != 1){
         int selection;
         menu();
@@ -116,7 +141,10 @@ int main(int argc, char const *argv[])
 
         switch(selection){
             case 1:
-                createDB("input");
+                cout << "Create Database" << endl;
+                cout << "Input File Name"<< endl;
+                cin >> filename;
+                createDB(filename);
                 break;
             case 2:
                 cout << "Open Database" << endl;
