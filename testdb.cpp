@@ -4,32 +4,37 @@
 using namespace std;
 
 //set the max limit
-const int Id_size=10;
-const int Experience_size=5;
-const int Married_size=5;
-const int Wage_size=20;
-const int Industry_size=30;
+const int Id_size=3;
+const int lName_size=11;
+const int fName_size=16;
+const int Age_size=3;
+const int Ticket_size=11;
+const int Fare_size=6;
+const int Date_size=9;
+
 
 
 
 // Write a fixed length record to the file.  
-void writeRecord(ofstream &Dout, const string &Id, const string &Experience, 
-                 const string &Married, const string &Wage, const string &Industry) {
+void writeRecord(ofstream &Dout, const string &Id, const string lName, const string fName, const string Age, const string Ticket, const string Fare, const string Date) {
     // Write ID
     Dout << setw(Id_size) << left << Id.substr(0, Id_size);
-    
-    // Write Experience
-    Dout << setw(Experience_size) << left << Experience.substr(0, Experience_size);
-    
-    // Write Married
-    Dout << setw(Married_size) << left << Married.substr(0, Married_size);
-    
-    // Write Wage
-    Dout << setw(Wage_size) << left << Wage.substr(0, Wage_size);
-    
-    // Write Industry
-    Dout << setw(Industry_size) << left << Industry.substr(0, Industry_size) << endl;
+    // Write Last Name
+    Dout << setw(lName_size) << left << lName.substr(0, lName_size);
+    // Write First Name
+    Dout << setw(fName_size) << left << fName.substr(0, fName_size);
+    // Write Age
+    Dout << setw(Age_size) << left << Age.substr(0, Age_size);
+    // Write Ticket
+    Dout << setw(Ticket_size) << left << Ticket.substr(0, Ticket_size);
+    // Write Fare
+    Dout << setw(Fare_size) << left << Fare.substr(0, Fare_size);
+    // Write Date
+    Dout << setw(Date_size) << left << Date.substr(0, Date_size);
 
+
+    
+    
 }
 
 void createDB(const string inFilename)
@@ -38,10 +43,13 @@ ifstream Din;   // the csv file
 ofstream Dout;  // the data file
 ofstream ConfigOut;  // the config file
 string Id = "ID";
-string Experience = "EXPERIENCE";
-string Married = "MARRIED";
-string Wage = "WAGE";
-string Industry = "INDUSTRY";
+string lName = "LAST_NAME";
+string fName = "FIRST_NAME";
+string Age = "AGE";
+string Ticket = "TICKET_NUM";
+string Fare = "FARE";
+string Date = "DATE_OF_PURCHASE";
+
 
    Din.open (inFilename+".csv");
    Dout.open (inFilename+".data");
@@ -49,17 +57,21 @@ string Industry = "INDUSTRY";
    while (!Din.eof())  
    {
       // read rest of the line
-      getline (Din, Experience, ',');  
-      getline (Din, Married, ',');  
-      getline (Din, Wage, ',');  
-      getline (Din, Industry);   // this one is terminated with \n
+     getline (Din, Id, ',');
+     getline (Din, lName, ',');
+     getline (Din, fName, ',');
+     getline (Din, Age, ',');
+     getline (Din, Ticket, ',');
+     getline (Din, Fare, ',');
+     getline (Din, Date, '\n');
+
 
 
       //write record
-      writeRecord (Dout, Id, Experience, Married, Wage, Industry);
+      writeRecord (Dout, Id, lName, fName, Age, Ticket, Fare, Date);
 
       //write an empty record
-      writeRecord (Dout, "_empty_", "None", "None", "None", "None");
+      writeRecord (Dout, "","","","","","","");
 
       getline (Din, Id, ',');  // Try to read the next line
    }
@@ -89,6 +101,8 @@ int main(int argc, char const *argv[])
   
   
   int x = 0;
+  string filename;
+  DB db; 
 
 
     while(x != 1){
@@ -106,9 +120,13 @@ int main(int argc, char const *argv[])
                 break;
             case 2:
                 cout << "Open Database" << endl;
+                cout << "Input File Name"<< endl;
+                cin >> filename;
+                db.open(filename);
                 break;
             case 3:
                 cout << "Close Database" << endl;
+                db.close();
                 break;
             case 4:
                 cout << "Display Record" << endl;
