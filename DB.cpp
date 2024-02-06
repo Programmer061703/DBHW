@@ -156,7 +156,7 @@ int DB::findNearestNonEmpty(int start, int lowLimit, int highLimit) {
         // Search for non-empty record in backward direction
         if (start - backStep >= lowLimit) {
             string RecordNum, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE, PASSENGER_ID;
-            if (readRecord(start - backStep, PASSENGER_ID, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE) && PASSENGER_ID != "") {
+            if (readRecord(start - backStep, PASSENGER_ID, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE) && PASSENGER_ID != "_empty_") {
                 return start - backStep; // Return index of non-empty record
             }
             backStep += 1; // Increase step for backward search
@@ -165,7 +165,7 @@ int DB::findNearestNonEmpty(int start, int lowLimit, int highLimit) {
         // Search for non-empty record in forward direction
         if (start + forwardStep <= highLimit) {
             string RecordNum, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE, PASSENGER_ID;
-            if (readRecord(start + forwardStep, PASSENGER_ID, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE) && PASSENGER_ID != "") {
+            if (readRecord(start + forwardStep, PASSENGER_ID, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE) && PASSENGER_ID != "_empty_") {
                 return start + forwardStep; // Return index of non-empty record
             }
             forwardStep += 1; // Increase step for forward search
