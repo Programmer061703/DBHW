@@ -9,6 +9,10 @@
 
 using namespace std;
 
+
+//FORMAT OF THE DATA FILE
+//PASSENGER_ID,FIRST_NAME,LAST_NAME,AGE,TICKET_NUM,FARE,DATE_OF_PURCHASE
+
 class DB
 {
 private:
@@ -45,8 +49,7 @@ public:
    * @return values of the fields with the name of the field and
    *         the values read from the record
    */
-  bool readRecord(const int RecordNum,
-                  string &Id, string &Experience, string &Married, string &Wage, string &Industry);
+  bool readRecord(const int RecordNum, int PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE);
 
   /**
    * Binary Search by record id
@@ -56,7 +59,8 @@ public:
    *         get the fields) or -1 if id not found
    */
   bool binarySearch(const string Id,int &recordNum,
-                   string &Experience, string &Married, string &Wage, string &Industry);
+                   int PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE);
+
   
   int findNearestNonEmpty(int start, int lowLimit, int highLimit);
 };

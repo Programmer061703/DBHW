@@ -4,6 +4,9 @@
 // Last updated:  Jan. 20, 2022
 //-----------------------------------------------------
 
+//FORMAT OF THE DATA FILE
+//PASSENGER_ID,FIRST_NAME,LAST_NAME,AGE,TICKET_NUM,FARE,DATE_OF_PURCHASE
+
 #include "DB.h"
 
 DB::DB()
@@ -40,32 +43,31 @@ void DB::close()
    * @return values of the fields with the name of the field and
    *         the values read from the record
    */
-bool DB::readRecord(const int RecordNum,
-                    string &Id, string &Experience, string &Married, string &Wage, string &Industry)
+bool DB::readRecord(const int RecordNum, int PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE)
 {
   bool status = false;
 
-  if ((0 <= RecordNum) && (RecordNum < NUM_RECORDS))
+  if ((0 <= PASSENGER_ID) && (PASSENGER_ID < NUM_RECORDS))
   {
-    Din.seekg(RecordNum * RECORD_SIZE, ios::beg);
-    Din >> Id >> Experience >> Married >> Wage >> Industry;
+    Din.seekg(PASSENGER_ID * RECORD_SIZE, ios::beg);
+    Din >> PASSENGER_ID >> FIRST_NAME >> LAST_NAME >> AGE >> TICKET_NUM >> FARE >> DATE_OF_PURCHASE;
     status = true;
   }
   else
-    cout << "Record " << RecordNum << " out of range.\n";
+    cout << "Record " << PASSENGER_ID << " out of range.\n";
 
   return status;
 }
 
+
 /**
    * Binary Search by id with possible empty records
    * returns true if the id is found, false otherwise
-   * sets recordNum to the record number of the id (if found)
-   * else, sets recordNum to the recordNumber of record after where the id was expected
+   * sets RecordNum to the record number of the id (if found)
+   * else, sets RecordNum to the RecordNumber of record after where the id was expected
    * @param id
    */
-bool DB::binarySearch(const string Id, int &recordNum,
-                      string &Experience, string &Married, string &Wage, string &Industry)
+bool DB::binarySearch(const string Id,int &RecordNum, int PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE)
 {
     // Initialize low and high indices for binary search
     int Low = 0;
@@ -78,12 +80,12 @@ bool DB::binarySearch(const string Id, int &recordNum,
         int Middle = (Low + High) / 2;
         string MiddleId;
 
-        // Update recordNum to current middle index
-        recordNum = Middle;
+        // Update RecordNum to current middle index
+        RecordNum = Middle;
 
         // Read record at middle index
-        if (!readRecord(Middle, MiddleId, Experience, Married, Wage, Industry)) {
-            //cout << "recordNum" << recordNum << endl;
+        if (!readRecord(RecordNum, PASSENGER_ID, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE)) {
+            //cout << "RecordNum" << RecordNum << endl;
             return false; // Return false if reading record fails
         }
 
@@ -98,16 +100,16 @@ bool DB::binarySearch(const string Id, int &recordNum,
 
             // Update Middle to index of nearest non-empty record
             Middle = nonEmptyRecord;
-            //cout << "recordNum" << recordNum << endl;
-            if (!readRecord(Middle, MiddleId, Experience, Married, Wage, Industry)) {
+            //cout << "RecordNum" << RecordNum << endl;
+            if (!readRecord(RecordNum, PASSENGER_ID, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE)) {
                 return false; // Return false if reading record fails
             }
             //correct  the record num for nearest space to insert
             if (stoi(MiddleId)>stoi(Id)){
-                recordNum=Middle-1;
+                RecordNum=Middle-1;
             }
             else{
-                recordNum=Middle+1;
+                RecordNum=Middle+1;
             }
         }
 
@@ -119,7 +121,7 @@ bool DB::binarySearch(const string Id, int &recordNum,
             // Check if the target ID is found
             if (middleIdInt == targetIdInt) {
                 Found = true;
-                recordNum = Middle; // Store the found record number
+                RecordNum = Middle; // Store the found record number
             } else if (middleIdInt < targetIdInt) {
                 Low = Middle + 1; // Narrow the search range to upper half
             } else {
@@ -147,8 +149,8 @@ int DB::findNearestNonEmpty(int start, int lowLimit, int highLimit) {
     while (true) {
         // Search for non-empty record in backward direction
         if (start - backStep >= lowLimit) {
-            string id, exp, married, wage, industry;
-            if (readRecord(start - backStep, id, exp, married, wage, industry) && id != "_empty_") {
+            string RecordNum, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE; int PASSENGER_ID;
+            if (readRecord(start - backStep, PASSENGER_ID, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE) && PASSENGER_ID != NULL) {
                 return start - backStep; // Return index of non-empty record
             }
             backStep += 1; // Increase step for backward search
@@ -156,8 +158,8 @@ int DB::findNearestNonEmpty(int start, int lowLimit, int highLimit) {
 
         // Search for non-empty record in forward direction
         if (start + forwardStep <= highLimit) {
-            string id, exp, married, wage, industry;
-            if (readRecord(start + forwardStep, id, exp, married, wage, industry) && id != "_empty_") {
+            string RecordNum, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE; int PASSENGER_ID;
+            if (readRecord(start + forwardStep, PASSENGER_ID, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE) && PASSENGER_ID != NULL) {
                 return start + forwardStep; // Return index of non-empty record
             }
             forwardStep += 1; // Increase step for forward search
