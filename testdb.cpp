@@ -23,7 +23,6 @@ void replaceSpaces(string &str) {
 }
 
 // Replace Underscores with Spaces
-
 void replaceUnderscores(string &str) {
     for (int i = 0; i < str.length(); i++) {
         if (str[i] == '_') {
@@ -31,10 +30,6 @@ void replaceUnderscores(string &str) {
         }
     }
 }
-
-
-
-
 
 // Write a fixed length record to the file.  
 void writeRecord(ofstream &Dout, const string &Id, const string lName, const string fName, const string Age, const string Ticket, const string Fare, const string Date) {
@@ -52,10 +47,21 @@ void writeRecord(ofstream &Dout, const string &Id, const string lName, const str
     Dout << setw(Fare_size) << left << Fare.substr(0, Fare_size);
     // Write Date
     Dout << setw(Date_size) << left << Date.substr(0, Date_size)<<endl;
+}
 
+void readCSV(ifstream &Din, ofstream &Dout, string &Id, string &lName, string &fName, string &Age, string &Ticket, string &Fare, string &Date) {
+    //read record
+     getline (Din, Id, ',');  // try to read an id
+     getline (Din, lName, ',');
+     getline (Din, fName, ',');
+     getline (Din, Age, ',');
+     getline (Din, Ticket, ',');
+     getline (Din, Fare, ',');
+     getline (Din, Date);
 
-    
-    
+      // Replace spaces with underscores
+      replaceSpaces(fName);
+      replaceSpaces(Ticket);
 }
 
 void createDB(const string inFilename)
@@ -72,24 +78,13 @@ string Fare = "FARE";
 string Date = "DATE_OF_PURCHASE";
 int recordNum = 0;
 
-
    Din.open (inFilename+".csv");
    Dout.open (inFilename+".data");
    getline (Din, Id, ',');  // try to read an id
    while (!Din.eof())  
    {
-      // read rest of the line
-     
-     getline (Din, lName, ',');
-     getline (Din, fName, ',');
-     getline (Din, Age, ',');
-     getline (Din, Ticket, ',');
-     getline (Din, Fare, ',');
-     getline (Din, Date);
-
-      // Replace spaces with underscores
-      replaceSpaces(fName);
-      replaceSpaces(Ticket);
+     //read record
+      readCSV(Din, Dout, Id, lName, fName, Age, Ticket, Fare, Date);
 
       //write record
       writeRecord (Dout, Id, lName, fName, Age, Ticket, Fare, Date);
@@ -97,9 +92,8 @@ int recordNum = 0;
 
       //write an empty record
       writeRecord (Dout, "NA","NA","NA","NA","NA","NA","NA");
-
-      getline (Din, Id, ',');  // Try to read the next line
-   }
+      recordNum++;
+      }
    Din.close();
    Dout.close();
    Din.open("config.data");
@@ -108,6 +102,7 @@ int recordNum = 0;
    Din.close();
    Dout.close();
 }
+
 void menu(){
 
   cout << "1. Create Database" << endl;
@@ -123,18 +118,12 @@ void menu(){
 
 }
 
-
-
-
 int main(int argc, char const *argv[])
 {
-  
   
   int x = 0;
   string filename;
   DB db; 
-
-
 
     while(x != 1){
         int selection;
@@ -185,9 +174,6 @@ int main(int argc, char const *argv[])
                 cout << "Invalid Selection" << endl;
                 break;
         }
-  
-  
-  
   
     }
     return 0;

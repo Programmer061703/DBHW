@@ -3,6 +3,7 @@
         "*.tcc": "cpp",
         "xstring": "cpp",
         "iosfwd": "cpp",
-        "xiosbase": "cpp"
+        "xiosbase": "cpp",
+        "ostream": "cpp"
     }
 }
