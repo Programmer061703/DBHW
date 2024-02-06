@@ -11,6 +11,7 @@ const int Age_size=5;
 const int Ticket_size=17;
 const int Fare_size=6;
 const int Date_size=9;
+const int recordSize = Id_size + lName_size + fName_size + Age_size + Ticket_size + Fare_size + Date_size;
 
 // Replace Spaces with Underscores
 void replaceSpaces(string &str) {
@@ -69,6 +70,7 @@ string Age = "AGE";
 string Ticket = "TICKET_NUM";
 string Fare = "FARE";
 string Date = "DATE_OF_PURCHASE";
+int recordNum = 0;
 
 
    Din.open (inFilename+".csv");
@@ -85,14 +87,13 @@ string Date = "DATE_OF_PURCHASE";
      getline (Din, Fare, ',');
      getline (Din, Date);
 
-
-
       // Replace spaces with underscores
       replaceSpaces(fName);
       replaceSpaces(Ticket);
 
       //write record
       writeRecord (Dout, Id, lName, fName, Age, Ticket, Fare, Date);
+      recordNum++;
 
       //write an empty record
       writeRecord (Dout, "NA","NA","NA","NA","NA","NA","NA");
@@ -101,6 +102,10 @@ string Date = "DATE_OF_PURCHASE";
    }
    Din.close();
    Dout.close();
+   Din.open("config.data");
+    ConfigOut.open("config.data");
+    ConfigOut << recordNum << " " << recordSize;
+    ConfigOut.close();
 }
 void menu(){
 
