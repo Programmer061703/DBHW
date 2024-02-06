@@ -50,13 +50,13 @@ void DB::close()
    * @return values of the fields with the name of the field and
    *         the values read from the record
    */
-bool DB::readRecord(const int RecordNum, int PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE)
+bool DB::readRecord(const int RecordNum, string PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE)
 {
   bool status = false;
 
-  if ((0 <= PASSENGER_ID) && (PASSENGER_ID < NUM_RECORDS))
+  if ((0 <= RecordNum) && (RecordNum < NUM_RECORDS))
   {
-    Din.seekg(PASSENGER_ID * RECORD_SIZE, ios::beg);
+    Din.seekg(RecordNum * RECORD_SIZE, ios::beg);
     Din >> PASSENGER_ID >> FIRST_NAME >> LAST_NAME >> AGE >> TICKET_NUM >> FARE >> DATE_OF_PURCHASE;
     status = true;
   }
@@ -66,7 +66,6 @@ bool DB::readRecord(const int RecordNum, int PASSENGER_ID, string &FIRST_NAME, s
   return status;
 }
 
-
 /**
    * Binary Search by id with possible empty records
    * returns true if the id is found, false otherwise
@@ -74,7 +73,7 @@ bool DB::readRecord(const int RecordNum, int PASSENGER_ID, string &FIRST_NAME, s
    * else, sets RecordNum to the RecordNumber of record after where the id was expected
    * @param id
    */
-bool DB::binarySearch(const string Id,int &RecordNum, int PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE)
+bool DB::binarySearch(const string Id,int &RecordNum, string PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE)
 {
     // Initialize low and high indices for binary search
     int Low = 0;
@@ -156,7 +155,7 @@ int DB::findNearestNonEmpty(int start, int lowLimit, int highLimit) {
     while (true) {
         // Search for non-empty record in backward direction
         if (start - backStep >= lowLimit) {
-            string RecordNum, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE; int PASSENGER_ID;
+            string RecordNum, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE, PASSENGER_ID;
             if (readRecord(start - backStep, PASSENGER_ID, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE) && PASSENGER_ID != NULL) {
                 return start - backStep; // Return index of non-empty record
             }
@@ -165,7 +164,7 @@ int DB::findNearestNonEmpty(int start, int lowLimit, int highLimit) {
 
         // Search for non-empty record in forward direction
         if (start + forwardStep <= highLimit) {
-            string RecordNum, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE; int PASSENGER_ID;
+            string RecordNum, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE, PASSENGER_ID;
             if (readRecord(start + forwardStep, PASSENGER_ID, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE) && PASSENGER_ID != NULL) {
                 return start + forwardStep; // Return index of non-empty record
             }

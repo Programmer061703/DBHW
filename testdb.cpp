@@ -13,6 +13,8 @@ const int Fare_size=6;
 const int Date_size=9;
 const int recordSize = Id_size + lName_size + fName_size + Age_size + Ticket_size + Fare_size + Date_size;
 
+
+
 // Replace Spaces with Underscores
 void replaceSpaces(string &str) {
     for (int i = 0; i < str.length(); i++) {
@@ -123,6 +125,15 @@ int main(int argc, char const *argv[])
   int x = 0;
   string filename;
   DB db; 
+  int lineNum;
+  string Id = "ID";
+  string lName = "LAST_NAME";
+  string fName = "FIRST_NAME";
+  string Age = "AGE";
+  string Ticket = "TICKET_NUM";
+  string Fare = "FARE";
+  string Date = "DATE_OF_PURCHASE";
+
 
     while(x != 1){
         int selection;
@@ -152,6 +163,8 @@ int main(int argc, char const *argv[])
                 break;
             case 4:
                 cout << "Display Record" << endl;
+                cin >> lineNum;
+                db.readRecord(lineNum, Id, lName, fName, Age, Ticket, Fare, Date);
                 break;
             case 5:
                 cout << "Create Report" << endl;
