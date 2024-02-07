@@ -92,7 +92,7 @@ int recordNum = 0;
       recordNum++;
 
       //write an empty record
-      writeRecord (Dout, "NA","NA","NA","NA","NA","NA","NA");
+      writeRecord (Dout, "empty","None","None","None","None","None","None");
       recordNum++;
       }
    Din.close();
