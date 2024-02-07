@@ -1,0 +1,150 @@
+Script started on 2024-02-06 19:35:14-0600
+]0;nhnewman@turing: ~[01;32mnhnewman@turing[00m:[01;34m~[00m$ exit./main.exeg++ -Wall *.cpp -o main.exe
+[01m[Ktestdb.cpp:[m[K In function ‘[01m[Kvoid replaceSpaces(std::__cxx11::string&)[m[K’:
+[01m[Ktestdb.cpp:20:23:[m[K [01;35m[Kwarning: [m[Kcomparison between signed and unsigned integer expressions [[01;35m[K-Wsign-compare[m[K]
+     for (int i = 0; [01;35m[Ki < str.length()[m[K; i++) {
+                     [01;35m[K~~^~~~~~~~~~~~~~[m[K
+[01m[Ktestdb.cpp:[m[K In function ‘[01m[Kvoid replaceUnderscores(std::__cxx11::string&)[m[K’:
+[01m[Ktestdb.cpp:29:23:[m[K [01;35m[Kwarning: [m[Kcomparison between signed and unsigned integer expressions [[01;35m[K-Wsign-compare[m[K]
+     for (int i = 0; [01;35m[Ki < str.length()[m[K; i++) {
+                     [01;35m[K~~^~~~~~~~~~~~~~[m[K
+]0;nhnewman@turing: ~[01;32mnhnewman@turing[00m:[01;34m~[00m$ g++ -Wall *.cpp -o main.exe[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K./main.exe
+1. Create Database
+2. Open Database
+3. Close Database
+4. Display Record
+5. Create Report
+6. Update Record
+7. Delete Record
+8. Add Record
+9. Exit
+Enter Selection: 1
+Create Database
+Input File Name
+SmallTitanic
+Database Created
+
+1. Create Database
+2. Open Database
+3. Close Database
+4. Display Record
+5. Create Report
+6. Update Record
+7. Delete Record
+8. Add Record
+9. Exit
+Enter Selection: 2
+Open Database
+Input File Name
+SmallTitanic
+Database Opened
+
+1. Create Database
+2. Open Database
+3. Close Database
+4. Display Record
+5. Create Report
+6. Update Record
+7. Delete Record
+8. Add Record
+9. Exit
+Enter Selection: 4
+Display Record
+Enter Record Number: 
+0
+
+recordNum: 0, Id: 2, Last Name: Cumings, First Name: John_Bradley, Age: 38, Ticket: PC_17599, Fare:71.3, Date:1/11/1912
+
+1. Create Database
+2. Open Database
+3. Close Database
+4. Display Record
+5. Create Report
+6. Update Record
+7. Delete Record
+8. Add Record
+9. Exit
+Enter Selection: 4
+Display Record
+Enter Record Number: 
+19
+
+recordNum: 19, Id: empty, Last Name: None, First Name: None, Age: None, Ticket: None, Fare:None, Date:None
+
+1. Create Database
+2. Open Database
+3. Close Database
+4. Display Record
+5. Create Report
+6. Update Record
+7. Delete Record
+8. Add Record
+9. Exit
+Enter Selection: 4
+Display Record
+Enter Record Number: 
+6
+
+recordNum: 6, Id: 9, Last Name: Johnson, First Name: Oscar_W, Age: 27, Ticket: 347742, Fare:11.1, Date:3/02/1912
+
+1. Create Database
+2. Open Database
+3. Close Database
+4. Display Record
+5. Create Report
+6. Update Record
+7. Delete Record
+8. Add Record
+9. Exit
+Enter Selection: 4
+Display Record
+Enter Record Number: 
+-1
+Record 9 out of range.
+Could not get record -1.
+
+1. Create Database
+2. Open Database
+3. Close Database
+4. Display Record
+5. Create Report
+6. Update Record
+7. Delete Record
+8. Add Record
+9. Exit
+Enter Selection: 4
+Display Record
+Enter Record Number: 
+1000
+Record 9 out of range.
+Could not get record 1000.
+
+1. Create Database
+2. Open Database
+3. Close Database
+4. Display Record
+5. Create Report
+6. Update Record
+7. Delete Record
+8. Add Record
+9. Exit
+Enter Selection: 3
+Close Database
+Database Closed
+
+1. Create Database
+2. Open Database
+3. Close Database
+4. Display Record
+5. Create Report
+6. Update Record
+7. Delete Record
+8. Add Record
+9. Exit
+Enter Selection: 9
+Exit
+
+]0;nhnewman@turing: ~[01;32mnhnewman@turing[00m:[01;34m~[00m$ exit
+exit
+
+Script done on 2024-02-06 19:36:27-0600
