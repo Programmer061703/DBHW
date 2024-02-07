@@ -51,7 +51,7 @@ public:
    * @return values of the fields with the name of the field and
    *         the values read from the record
    */
-  bool readRecord(const int RecordNum, string PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE);
+  bool readRecord(const int RecordNum, string &PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE);
 
   /**
    * Binary Search by record id

@@ -144,16 +144,19 @@ int main(int argc, char const *argv[])
                 cout << "Input File Name"<< endl;
                 cin >> filename;
                 createDB(filename);
+                cout << "Database Created" << endl;
                 break;
             case 2:
                 cout << "Open Database" << endl;
                 cout << "Input File Name"<< endl;
                 cin >> filename;
                 db.open(filename + ".data");
+                cout << "Database Opened" << endl;
                 break;
             case 3:
                 cout << "Close Database" << endl;
                 db.close();
+                cout << "Database Closed" << endl;
                 break;
             case 4:
                 cout << "Display Record" << endl;
@@ -169,15 +172,23 @@ int main(int argc, char const *argv[])
                 break;
             case 5:
                 cout << "Create Report" << endl;
+
+                cout <<"Report created"<<endl;
                 break;
             case 6:
                 cout << "Update Record" << endl;
+
+                cout << "record updated"<<endl;
                 break;
             case 7:
                 cout << "Delete Record" << endl;
+
+                cout << "record deleted"<<endl;
                 break;
             case 8:
                 cout << "Add Record" << endl;
+
+                cout << "record added"<<endl;
                 break;
             case 9:
                 cout << "Exit" << endl;

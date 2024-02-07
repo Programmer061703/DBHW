@@ -50,7 +50,7 @@ void DB::close()
    * @return values of the fields with the name of the field and
    *         the values read from the record
    */
-bool DB::readRecord(const int RecordNum, string PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE)
+bool DB::readRecord(const int RecordNum, string &PASSENGER_ID, string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE)
 {
   bool status = false;
 
