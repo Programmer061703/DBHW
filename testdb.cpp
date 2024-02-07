@@ -8,9 +8,9 @@ const int Id_size=6;
 const int lName_size=12;
 const int fName_size=16;
 const int Age_size=5;
-const int Ticket_size=17;
+const int Ticket_size=18;
 const int Fare_size=6;
-const int Date_size=9;
+const int Date_size=10;
 const int recordSize = Id_size + lName_size + fName_size + Age_size + Ticket_size + Fare_size + Date_size;
 
 

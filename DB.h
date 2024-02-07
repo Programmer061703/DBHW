@@ -24,7 +24,7 @@ private:
 
 public:
   //const static int RECORD_SIZE = 72;  // Windows record size
-  const static int RECORD_SIZE = 71;    // linux record size
+  const static int RECORD_SIZE = 75;    // linux record size  (73 + 2(for windows newline character) = 75)
   const static int NUM_RECORDS = 20;
   bool openStatus = false;
 
