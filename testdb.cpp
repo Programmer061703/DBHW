@@ -144,26 +144,26 @@ int main(int argc, char const *argv[])
                 cout << "Input File Name"<< endl;
                 cin >> filename;
                 createDB(filename);
-                cout << "Database Created" << endl;
+                cout << "Database Created" << endl << endl;
                 break;
             case 2:
                 cout << "Open Database" << endl;
                 cout << "Input File Name"<< endl;
                 cin >> filename;
                 db.open(filename + ".data");
-                cout << "Database Opened" << endl;
+                cout << "Database Opened" << endl << endl;
                 break;
             case 3:
                 cout << "Close Database" << endl;
                 db.close();
-                cout << "Database Closed" << endl;
+                cout << "Database Closed" << endl << endl;
                 break;
             case 4:
                 cout << "Display Record" << endl;
-                cout << "Enter Record Number: ";
+                cout << "Enter Record Number: " << endl;
                 cin >> lineNum;
                 if (db.readRecord(lineNum, Id, lName, fName, Age, Ticket, Fare, Date))
-                    cout << "recordNum: " << lineNum << ", Id: " << Id
+                    cout << endl << "recordNum: " << lineNum << ", Id: " << Id
                         << ", Last Name: " << lName << ", First Name: " << fName
                         << ", Age: " << Age << ", Ticket: " << Ticket
                         << ", Fare:" << Fare << ", Date:" << Date << "\n\n";
@@ -173,25 +173,25 @@ int main(int argc, char const *argv[])
             case 5:
                 cout << "Create Report" << endl;
 
-                cout <<"Report created"<<endl;
+                cout <<"Report created"<<endl << endl;
                 break;
             case 6:
                 cout << "Update Record" << endl;
 
-                cout << "record updated"<<endl;
+                cout << "record updated"<<endl << endl;
                 break;
             case 7:
                 cout << "Delete Record" << endl;
 
-                cout << "record deleted"<<endl;
+                cout << "record deleted"<<endl << endl;
                 break;
             case 8:
                 cout << "Add Record" << endl;
 
-                cout << "record added"<<endl;
+                cout << "record added"<<endl << endl;
                 break;
             case 9:
-                cout << "Exit" << endl;
+                cout << "Exit" << endl << endl;
                 x = 1;
                 break;
             default:
