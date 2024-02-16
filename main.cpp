@@ -109,7 +109,6 @@ int main(int argc, char **argv)
                             break;
                         }
                     }
-                    cout << recordNum;
                     break;
 
             case 8: // Add record
