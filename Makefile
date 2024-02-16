@@ -1,6 +1,5 @@
 all: 
-	g++ -Wall testdb.cpp DB.cpp -o testdb
+	g++ -Wall main.cpp database.cpp -o main
 
 clean:
-	-rm testdb
-	
+	-rm main
