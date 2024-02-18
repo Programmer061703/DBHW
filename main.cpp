@@ -27,6 +27,18 @@ void menu()
         << "10) Quit\n";
 }
 
+void updateMenu(){
+    cout << "1) First Name\n"
+         << "2) Last Name\n"
+         << "3) Age\n"
+         << "4) Ticket Number\n"
+         << "5) Fare\n"
+         << "6) Purchase Date\n";
+  
+  }
+
+
+
 int main(int argc, char **argv)
 {
 	string id, first_name, last_name, age, ticket_num, fare, purchase_date;
@@ -35,6 +47,7 @@ int main(int argc, char **argv)
     string filename;
     int recordNum;
     string recordID;
+    int updateSelection;
     int count = 0;
   
 	
@@ -89,10 +102,59 @@ int main(int argc, char **argv)
 
                 break; 
             case 6: // Update record
+                cout<<"Enter record number to update: ";
+                cin>>recordID;
+                if(db.binarySearch(recordID, recordNum ,first_name, last_name, age, ticket_num, fare, purchase_date) == 1) {
+                    printData(recordID, first_name, last_name, age, ticket_num, fare, purchase_date);
+                } else {
+                    cout << "Failed to read record or record does not exist." << endl;
+                }
+                
+                cout << "Which Field would you like to update?" << endl;
+                updateMenu();
+                cin >> updateSelection;
+                
+                switch(updateSelection){
+                    case 1: 
+                        cout <<"Enter new First Name: ";
+                        cin >> first_name;
+                        db.updateRecord(recordID, recordNum, first_name, last_name, age, ticket_num, fare, purchase_date);
+                        break;
+                    case 2:
+                        cout <<"Enter new Last Name: ";
+                        cin >> last_name;
+                        db.updateRecord(recordID, recordNum, first_name, last_name, age, ticket_num, fare, purchase_date);
+                        break;
+                    case 3:
+                        cout <<"Enter new Age: ";
+                        cin >> age;
+                        db.updateRecord(recordID, recordNum, first_name, last_name, age, ticket_num, fare, purchase_date);
+                        break;
+                    case 4:
+                        cout <<"Enter new Ticket Number: ";
+                        cin >> ticket_num;
+                        db.updateRecord(recordID, recordNum, first_name, last_name, age, ticket_num, fare, purchase_date);
+                        break;
+                    case 5:
+                        cout <<"Enter new Fare: ";
+                        cin >> fare;
+                        db.updateRecord(recordID, recordNum, first_name, last_name, age, ticket_num, fare, purchase_date);
+                        break;
+                    case 6:
+                        cout <<"Enter new Purchase Date: ";
+                        cin >> purchase_date;
+                        db.updateRecord(recordID, recordNum, first_name, last_name, age, ticket_num, fare, purchase_date);
+                        break;
+                    default:
+                        cout << "Invalid selection, please try again." << endl;
+                        break;
+                }
+
+
             
                 break;
             case 7: // Create report
-               
+                count = 0;
                     for (recordNum = 0; count < 10; recordNum++)
                     {
                         if (db.readRecord(recordNum, id, first_name, last_name, age, ticket_num, fare, purchase_date) == 1)

@@ -26,6 +26,8 @@ public:
    bool binarySearch(const string Id,int &recordNum,
              string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE);
    int findNearestNonEmpty(int start, int lowLimit, int highLimit);
+   bool updateRecord(const string Id,int &recordNum,
+             string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE);
 			   
    //variables
    const int RECORD_SIZE = 85;

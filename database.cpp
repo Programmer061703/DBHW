@@ -153,6 +153,35 @@ bool Success = false;
 		
 	return Success;
 }
+
+bool Database::updateRecord(const string Id,int &RecordNum ,string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE){
+    
+ // First, use binarySearch to find the record by ID
+    bool found = binarySearch(Id, RecordNum, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE);
+    if (!found)
+    {
+        cout << "Record with ID " << Id << " not found." << endl;
+        return false;
+    }
+    else
+    {
+        // Seek to the record's position
+        f_db.seekp(RecordNum * record_size, ios::beg);
+
+        // Update the record with new values
+        writeRecord(Id, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE);
+
+        // Optionally, print the updated record
+        cout << "Updated Record:" << endl;
+        cout << "ID: " << Id << ", First Name: " << FIRST_NAME << ", Last Name: " << LAST_NAME
+             << ", Age: " << AGE << ", Ticket Number: " << TICKET_NUM << ", Fare: " << FARE
+             << ", Purchase Date: " << DATE_OF_PURCHASE << endl;
+
+        return true;
+    }
+
+    
+}
  
 bool Database::isOpen()
 {
@@ -264,5 +293,7 @@ int Database::findNearestNonEmpty(int start, int lowLimit, int highLimit) {
     }
     return -1; // Return -1 if no non-empty record is found
 }
+
+
 
 
