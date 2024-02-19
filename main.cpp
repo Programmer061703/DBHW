@@ -65,7 +65,7 @@ int main(int argc, char **argv)
         cin >> selection;
         switch (selection) {
             case 1: // Create new database
-            
+
                 cout << "Enter database name: ";
                 cin >> filename;
                 if(db.createDb(filename)){
@@ -73,7 +73,7 @@ int main(int argc, char **argv)
                 }
                 break;
             case 2: // Open database
-           
+
                 cout << "Enter database name to open: ";
                 cin >> filename;
                 if(db.openDb(filename)) {
@@ -120,7 +120,7 @@ int main(int argc, char **argv)
                     cout <<"No Database open" << endl;
                     break;
                 }
-                cout<<"Enter ID number to update: ";
+                cout<<"Enter ID number to update:"<<endl;
                 cin>>recordID;
                 if(db.binarySearch(recordID, recordNum ,first_name, last_name, age, ticket_num, fare, purchase_date) == 1) {
                     printData(recordID, first_name, last_name, age, ticket_num, fare, purchase_date);
