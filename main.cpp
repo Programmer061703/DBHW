@@ -53,6 +53,7 @@ int main(int argc, char **argv)
     string idChange; 
     int empty_temp;
     int full_temp;
+
   
 	
 	cout << endl << "Welcome to the database part 1" << endl;
@@ -64,6 +65,7 @@ int main(int argc, char **argv)
         cin >> selection;
         switch (selection) {
             case 1: // Create new database
+            
                 cout << "Enter database name: ";
                 cin >> filename;
                 if(db.createDb(filename)){
@@ -71,6 +73,7 @@ int main(int argc, char **argv)
                 }
                 break;
             case 2: // Open database
+           
                 cout << "Enter database name to open: ";
                 cin >> filename;
                 if(db.openDb(filename)) {
@@ -84,6 +87,10 @@ int main(int argc, char **argv)
      
                 break;
             case 4: // Read record
+            if (!db.isOpen()){
+                    cout <<"No Database open" << endl;
+                    break;
+                }
                 cout << "Enter record number to display: ";
                 cin >> recordNum;
                 if(db.readRecord(recordNum, id, first_name, last_name, age, ticket_num, fare, purchase_date) == 1) {
@@ -93,7 +100,10 @@ int main(int argc, char **argv)
                 }
                 break;
             case 5: // Display record
-
+                if (!db.isOpen()){
+                    cout <<"No Database open" << endl;
+                    break;
+                }
                 cout << "Enter passenger ID to display: ";
                 cin >> recordID;
                 if(db.binarySearch(recordID, recordNum ,first_name, last_name, age, ticket_num, fare, purchase_date) == 1) {
@@ -106,7 +116,11 @@ int main(int argc, char **argv)
 
                 break; 
             case 6: // Update record
-                cout<<"Enter record number to update: ";
+            if (!db.isOpen()){
+                    cout <<"No Database open" << endl;
+                    break;
+                }
+                cout<<"Enter ID number to update: ";
                 cin>>recordID;
                 if(db.binarySearch(recordID, recordNum ,first_name, last_name, age, ticket_num, fare, purchase_date) == 1) {
                     printData(recordID, first_name, last_name, age, ticket_num, fare, purchase_date);
@@ -159,6 +173,10 @@ int main(int argc, char **argv)
                 break;
             case 7: // Create report
                 count = 0;
+                if (!db.isOpen()){
+                    cout <<"No Database open" << endl;
+                    break;
+                }
                     for (recordNum = 0; count < 10; recordNum++)
                     {
                         if (db.readRecord(recordNum, id, first_name, last_name, age, ticket_num, fare, purchase_date) == 1)
@@ -171,25 +189,32 @@ int main(int argc, char **argv)
                         }
                         else
                         {
-                            cout << "Failed to read record or record does not exist." << endl;
                             break;
                         }
                     }
                     break;
 
             case 8: // Add record
-            
+                if (!db.isOpen()){
+                    cout <<"No Database open" << endl;
+                    break;
+                }
                 cout << "Enter ID to add: ";
                 cin >> idInput;
                 recordNum = 0;
                 idChange = "0";
+                full_temp = 0;
+                empty_temp = 0;
+                
 
                 while(stoi(idInput) > stoi(idChange)){
+                   
                     
-                    if(db.readRecord(recordNum, idChange, first_name, last_name, age, ticket_num, fare, purchase_date) == 1) {
+                    if(db.readRecord(recordNum, id, first_name, last_name, age, ticket_num, fare, purchase_date) == 1) {
                        if(id != "_empty_"){
                            full_temp = recordNum;
                            recordNum++;
+                           idChange = id;
                        }
                           else{
                             empty_temp = recordNum;
@@ -197,21 +222,36 @@ int main(int argc, char **argv)
                           }
                     
                     }
+                    cout << idInput<<endl;
+                    cout << idChange<<endl;
+                   
 
-                    if(db.MAX_RECORDS(recordNum) == 1){
-                        break;
-                    }
-
-                    if(idInput == idChange){
+                  
+                    
+                    while(stoi(idInput) == stoi(idChange)){
+                       
                         cout << "ID already exists, please enter a new ID Or type Exit to leave: ";
                         cin >> idInput;
                         recordNum = 0;
-                        idChange = "0";
+                        
                         if(idInput == "Exit"){
                             break;
+
                         }
+                    else if(stoi(idInput) != stoi(idChange)){
+                        idChange = "0";
+                        
+                        continue; 
+                      
+                    }
+                     }
+
+
+                if(db.MAX_RECORDS(recordNum) == 1){
+                    break;
                     }
                 }
+
                 if(abs(full_temp - empty_temp) != 1){
                     cout << "No Room"<<endl;
                 }
@@ -235,10 +275,14 @@ int main(int argc, char **argv)
                 }
         break;
             case 9: // Delete record
-                cout<<"Enter record number to delete: ";
+            if (!db.isOpen()){
+                    cout <<"No Database open" << endl;
+                    break;
+                }
+                cout<<"Enter ID number to delete: ";
                 cin>>recordID;
                 if(db.binarySearch(recordID, recordNum ,first_name, last_name, age, ticket_num, fare, purchase_date) == 1) {
-                    printData(recordID, first_name, last_name, age, ticket_num, fare, purchase_date);
+                    cout << "Record Exists"<<endl;
                 } else {
                     cout << "Failed to read record or record does not exist." << endl;
                 }

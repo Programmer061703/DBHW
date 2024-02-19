@@ -31,7 +31,7 @@ public:
    bool MAX_RECORDS(const int recordNum);
 			   
    //variables
-   const int RECORD_SIZE = 85;
+   const int RECORD_SIZE = 86; // 85 for Linux 86 for Windows
    
 
 private:
