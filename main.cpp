@@ -222,8 +222,6 @@ int main(int argc, char **argv)
                           }
                     
                     }
-                    cout << idInput<<endl;
-                    cout << idChange<<endl;
                    
 
                   
