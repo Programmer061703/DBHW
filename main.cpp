@@ -177,7 +177,16 @@ int main(int argc, char **argv)
                 // Gather input from the user and use writeRecord or another method to add
                 break;
             case 9: // Delete record
+                cout<<"Enter record number to delete: ";
+                cin>>recordID;
+                if(db.binarySearch(recordID, recordNum ,first_name, last_name, age, ticket_num, fare, purchase_date) == 1) {
+                    printData(recordID, first_name, last_name, age, ticket_num, fare, purchase_date);
+                } else {
+                    cout << "Failed to read record or record does not exist." << endl;
+                }
                 // Implementation depends on how the Database class handles deletion
+                db.updateRecord("_empty_", recordNum, "None", "None", "None", "None", "None","None");
+
                 break;
             case 10: // Quit
                 if (!db.isOpen())

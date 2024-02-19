@@ -154,31 +154,39 @@ bool Success = false;
 	return Success;
 }
 
-bool Database::updateRecord(const string Id,int &RecordNum ,string &FIRST_NAME, string &LAST_NAME, string &AGE, string &TICKET_NUM, string &FARE, string &DATE_OF_PURCHASE){
+bool Database::updateRecord(const string Id,int RecordNum ,string FIRST_NAME, string LAST_NAME, string AGE, string TICKET_NUM, string FARE, string DATE_OF_PURCHASE){
     
- // First, use binarySearch to find the record by ID
-    bool found = binarySearch(Id, RecordNum, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE);
-    if (!found)
-    {
-        cout << "Record with ID " << Id << " not found." << endl;
-        return false;
-    }
-    else
-    {
-        // Seek to the record's position
-        f_db.seekp(RecordNum * record_size, ios::beg);
 
-        // Update the record with new values
-        writeRecord(Id, FIRST_NAME, LAST_NAME, AGE, TICKET_NUM, FARE, DATE_OF_PURCHASE);
+// First, use binarySearch to find the record by ID
 
-        // Optionally, print the updated record
-        cout << "Updated Record:" << endl;
-        cout << "ID: " << Id << ", First Name: " << FIRST_NAME << ", Last Name: " << LAST_NAME
-             << ", Age: " << AGE << ", Ticket Number: " << TICKET_NUM << ", Fare: " << FARE
-             << ", Purchase Date: " << DATE_OF_PURCHASE << endl;
+bool Success = false;
 
-        return true;
-    }
+if (!isOpen())
+cout <<"No Database open" << endl;
+else if ((RecordNum < 0) || (RecordNum >= num_records))
+cout << "value is out of range" << endl << endl;
+else
+{
+// Write the updated record to the file
+f_db.seekg(((RecordNum) * record_size), ios::beg);
+f_db << setw(ID_SIZE) << left << Id.substr(0, ID_SIZE) << " " 
+<< setw(FIRST_SIZE) << left << FIRST_NAME.substr(0, FIRST_SIZE) << " " 
+<< setw(LAST_SIZE) << left << LAST_NAME.substr(0, LAST_SIZE) << " " 
+<< setw(AGE_SIZE) << left << AGE.substr(0, AGE_SIZE) << " " 
+<< setw(TICKET_NUM_SIZE) << left << TICKET_NUM.substr(0, TICKET_NUM_SIZE) << " " 
+<< setw(FARE_SIZE) << left << FARE.substr(0, FARE_SIZE) << " " 
+<< setw(DATE_SIZE) << left << DATE_OF_PURCHASE.substr(0, DATE_SIZE) << endl;
+
+
+// Optionally, print the updated record
+cout << "Updated Record:" << endl;
+cout << "ID: " << Id << ", First Name: " << FIRST_NAME << ", Last Name: " << LAST_NAME
+<< ", Age: " << AGE << ", Ticket Number: " << TICKET_NUM << ", Fare: " << FARE
+<< ", Purchase Date: " << DATE_OF_PURCHASE << endl;
+
+Success = true;
+}
+return Success;
 
     
 }
