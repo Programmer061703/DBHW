@@ -28,6 +28,7 @@ public:
    int findNearestNonEmpty(int start, int lowLimit, int highLimit);
    bool updateRecord(const string Id,int recordNum,
              string FIRST_NAME, string LAST_NAME, string AGE, string TICKET_NUM, string FARE, string DATE_OF_PURCHASE);
+   bool MAX_RECORDS(const int recordNum);
 			   
    //variables
    const int RECORD_SIZE = 85;

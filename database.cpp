@@ -302,6 +302,20 @@ int Database::findNearestNonEmpty(int start, int lowLimit, int highLimit) {
     return -1; // Return -1 if no non-empty record is found
 }
 
+bool Database::MAX_RECORDS(const int recordNum){
+    if(!isOpen()){
+        cout << "No database is open." << endl;
+        return false;
+    } 
+    
+    if (recordNum>=num_records){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
 
 
 

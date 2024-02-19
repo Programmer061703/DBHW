@@ -48,7 +48,11 @@ int main(int argc, char **argv)
     int recordNum;
     string recordID;
     int updateSelection;
-    int count = 0;
+    int count = 0;  
+    string idInput;
+    string idChange; 
+    int empty_temp;
+    int full_temp;
   
 	
 	cout << endl << "Welcome to the database part 1" << endl;
@@ -174,8 +178,62 @@ int main(int argc, char **argv)
                     break;
 
             case 8: // Add record
-                // Gather input from the user and use writeRecord or another method to add
-                break;
+            
+                cout << "Enter ID to add: ";
+                cin >> idInput;
+                recordNum = 0;
+                idChange = "0";
+
+                while(stoi(idInput) > stoi(idChange)){
+                    
+                    if(db.readRecord(recordNum, idChange, first_name, last_name, age, ticket_num, fare, purchase_date) == 1) {
+                       if(id != "_empty_"){
+                           full_temp = recordNum;
+                           recordNum++;
+                       }
+                          else{
+                            empty_temp = recordNum;
+                            recordNum++;
+                          }
+                    
+                    }
+
+                    if(db.MAX_RECORDS(recordNum) == 1){
+                        break;
+                    }
+
+                    if(idInput == idChange){
+                        cout << "ID already exists, please enter a new ID Or type Exit to leave: ";
+                        cin >> idInput;
+                        recordNum = 0;
+                        idChange = "0";
+                        if(idInput == "Exit"){
+                            break;
+                        }
+                    }
+                }
+                if(abs(full_temp - empty_temp) != 1){
+                    cout << "No Room"<<endl;
+                }
+                else{
+                    cout << "Enter First Name: ";
+                    cin >> first_name;
+                    cout << "Enter Last Name: ";
+                    cin >> last_name;
+                    cout << "Enter Age: ";
+                    cin >> age;
+                    cout << "Enter Ticket Number: ";
+                    cin >> ticket_num;
+                    cout << "Enter Fare: ";
+                    cin >> fare;
+                    cout << "Enter Purchase Date: ";
+                    cin >> purchase_date;
+                    if(db.updateRecord(idInput, empty_temp, first_name, last_name, age, ticket_num, fare, purchase_date)== 1){
+                        cout << "Record Added"<<endl; 
+                        printData(idInput, first_name, last_name, age, ticket_num, fare, purchase_date);
+                    }
+                }
+        break;
             case 9: // Delete record
                 cout<<"Enter record number to delete: ";
                 cin>>recordID;
