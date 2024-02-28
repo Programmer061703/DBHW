@@ -222,10 +222,7 @@ int main(int argc, char **argv)
                           }
                     
                     }
-                   
-
-                  
-                    
+       
                     while(stoi(idInput) == stoi(idChange)){
                        
                         cout << "ID already exists, please enter a new ID Or type Exit to leave: ";
