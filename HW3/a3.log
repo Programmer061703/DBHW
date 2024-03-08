@@ -1,0 +1,94 @@
+Tables_in_brw020
+Dish
+FoodOrder
+MenuItem
+Restaurant
+Field	Type	Null	Key	Default	Extra
+orderNo	int(11)	NO	PRI	NULL	
+itemNo	int(11)	YES	MUL	NULL	
+date	date	YES		NULL	
+time	time	YES		NULL	
+Field	Type	Null	Key	Default	Extra
+itemNo	int(11)	NO	PRI	NULL	
+restaurantNo	int(11)	YES	MUL	NULL	
+dishNo	int(11)	YES	MUL	NULL	
+price	decimal(4,2)	YES		NULL	
+Field	Type	Null	Key	Default	Extra
+dishNo	int(11)	NO	PRI	NULL	
+dishName	char(25)	NO		NULL	
+type	enum('ap','en','ds')	NO		NULL	
+Field	Type	Null	Key	Default	Extra
+restaurantID	int(11)	NO	PRI	NULL	
+restaurantName	char(15)	NO		NULL	
+type	char(15)	NO		NULL	
+city	char(15)	NO		NULL	
+Table	Create Table
+FoodOrder	CREATE TABLE `FoodOrder` (\n  `orderNo` int(11) NOT NULL,\n  `itemNo` int(11) DEFAULT NULL,\n  `date` date DEFAULT NULL,\n  `time` time DEFAULT NULL,\n  PRIMARY KEY (`orderNo`),\n  KEY `itemNo` (`itemNo`),\n  CONSTRAINT `FoodOrder_ibfk_1` FOREIGN KEY (`itemNo`) REFERENCES `MenuItem` (`itemNo`)\n) ENGINE=InnoDB DEFAULT CHARSET=latin1
+Table	Create Table
+MenuItem	CREATE TABLE `MenuItem` (\n  `itemNo` int(11) NOT NULL,\n  `restaurantNo` int(11) DEFAULT NULL,\n  `dishNo` int(11) DEFAULT NULL,\n  `price` decimal(4,2) DEFAULT NULL,\n  PRIMARY KEY (`itemNo`),\n  KEY `restaurantNo` (`restaurantNo`),\n  KEY `dishNo` (`dishNo`),\n  CONSTRAINT `MenuItem_ibfk_1` FOREIGN KEY (`restaurantNo`) REFERENCES `Restaurant` (`restaurantID`),\n  CONSTRAINT `MenuItem_ibfk_2` FOREIGN KEY (`dishNo`) REFERENCES `Dish` (`dishNo`)\n) ENGINE=InnoDB DEFAULT CHARSET=latin1
+Table	Create Table
+Dish	CREATE TABLE `Dish` (\n  `dishNo` int(11) NOT NULL,\n  `dishName` char(25) NOT NULL,\n  `type` enum('ap','en','ds') NOT NULL,\n  PRIMARY KEY (`dishNo`)\n) ENGINE=InnoDB DEFAULT CHARSET=latin1
+Table	Create Table
+Restaurant	CREATE TABLE `Restaurant` (\n  `restaurantID` int(11) NOT NULL,\n  `restaurantName` char(15) NOT NULL,\n  `type` char(15) NOT NULL,\n  `city` char(15) NOT NULL,\n  PRIMARY KEY (`restaurantID`)\n) ENGINE=InnoDB DEFAULT CHARSET=latin1
+COLUMN_NAME	CONSTRAINT_NAME	REFERENCED_COLUMN_NAME	REFERENCED_TABLE_NAME
+itemNo	FoodOrder_ibfk_1	itemNo	MenuItem
+restaurantNo	MenuItem_ibfk_1	restaurantID	Restaurant
+dishNo	MenuItem_ibfk_2	dishNo	Dish
+orderNo	itemNo	date	time
+0	2	2024-03-01	10:30:00
+1	0	2024-03-02	15:33:00
+2	3	2024-03-01	15:35:00
+3	5	2024-03-03	21:00:00
+4	7	2024-03-01	18:11:00
+5	7	2024-03-04	18:51:00
+6	9	2024-03-01	19:00:00
+7	11	2024-03-05	17:15:00
+8	11	2024-04-01	12:10:00
+itemNo	restaurantNo	dishNo	price
+0	0	13	8.00
+1	0	16	9.00
+2	0	44	10.00
+3	0	15	19.00
+4	0	22	19.00
+5	3	44	6.25
+6	3	12	5.50
+7	3	7	12.50
+8	3	19	13.50
+9	5	13	6.00
+10	5	15	15.00
+11	5	22	14.00
+dishNo	dishName	type
+7	Cheese Pizza	en
+10	Custard	ds
+12	Garlic Bread	ap
+13	Spring Rolls	ap
+15	Pad Thai	en
+16	Pot Stickers	ap
+19	Pepperoni Pizza	en
+22	Masaman Curry	en
+44	Salad	ap
+77	Veggie Supreme Pizza	en
+restaurantID	restaurantName	type	city
+0	Tasty Thai	Asian	Dallas
+3	Eureka Pizza	Pizza	Fayetteville
+5	Tasty Thai	Asian	Las Vegas
+restaurantName	city
+Tasty Thai	Dallas
+Eureka Pizza	Fayetteville
+dishName	restaurantName	price
+Spring Rolls	Tasty Thai	6.00
+Spring Rolls	Tasty Thai	8.00
+Pot Stickers	Tasty Thai	9.00
+Salad	Tasty Thai	10.00
+Masaman Curry	Tasty Thai	14.00
+Pad Thai	Tasty Thai	15.00
+Pad Thai	Tasty Thai	19.00
+Masaman Curry	Tasty Thai	19.00
+restaurantName	TotalItems	AveragePrice
+Eureka Pizza	4	9.437500
+Tasty Thai	3	11.666667
+Tasty Thai	5	13.000000
+NumberOfOrders	AverageBasePrice	TotalBasePrice	TotalPriceWithTax
+3	10.416667	31.25	34.3750
+NumberOfOrders	AverageBasePrice	TotalBasePrice	TotalPriceWithTax
+8	11.031250	88.25	97.0750
