@@ -1,0 +1,76 @@
+CREATE TABLE Restaurant (
+    restaurantID INT PRIMARY KEY,
+    restaurantName CHAR(15) NOT NULL,
+    type CHAR(15) NOT NULL,
+    city CHAR(15) NOT NULL
+);
+
+CREATE TABLE Dish (
+    dishNo INT PRIMARY KEY,
+    dishName CHAR(25) NOT NULL,
+    type ENUM('ap', 'en', 'ds') NOT NULL
+);
+
+CREATE TABLE MenuItem (
+    itemNo INT PRIMARY KEY,
+    restaurantNo INT,
+    dishNo INT,
+    price DECIMAL(4,2) CHECK (price >= 5 AND price <= 50),
+    FOREIGN KEY (restaurantNo) REFERENCES Restaurant(restaurantID),
+    FOREIGN KEY (dishNo) REFERENCES Dish(dishNo)
+);
+
+CREATE TABLE FoodOrder (
+    orderNo INT PRIMARY KEY,
+    itemNo INT,
+    date DATE CHECK (date >= '2024-01-01'),
+    time TIME,
+    FOREIGN KEY (itemNo) REFERENCES MenuItem(itemNo)
+);
+
+
+
+
+
+INSERT INTO Restaurant (restaurantID, restaurantName, type, city) VALUES
+(0, 'Tasty Thai', 'Asian', 'Dallas'),
+(3, 'Eureka Pizza', 'Pizza', 'Fayetteville'),
+(5, 'Tasty Thai', 'Asian', 'Las Vegas');
+
+
+INSERT INTO Dish (dishNo, dishName, type) VALUES
+(13, 'Spring Rolls', 'ap'),
+(15, 'Pad Thai', 'en'),
+(16, 'Pot Stickers', 'ap'),
+(22, 'Masaman Curry', 'en'),
+(10, 'Custard', 'ds'),
+(12, 'Garlic Bread', 'ap'),
+(44, 'Salad', 'ap'),
+(7, 'Cheese Pizza', 'en'),
+(19, 'Pepperoni Pizza', 'en'),
+(77, 'Veggie Supreme Pizza', 'en');
+
+INSERT INTO MenuItem (itemNo, restaurantNo, dishNo, price) VALUES
+(0,  0, 13, 8.00),
+(1,  0, 16, 9.00),
+(2,  0, 44, 10.00),
+(3,  0, 15, 19.00),
+(4,  0, 22, 19.00),
+(5,  3, 44, 6.25),
+(6,  3, 12, 5.50),
+(7,  3, 07, 12.50),
+(8,  3, 19, 13.50),
+(9,  5, 13, 6.00),
+(10, 5, 15, 15.00),
+(11, 5, 22, 14.00);
+
+INSERT INTO FoodOrder (orderNo, itemNo, date, time) VALUES
+(0,  2, '2024-03-01', '10:30:00'),
+(1,  0, '2024-03-02', '15:33:00'),
+(2,  3, '2024-03-01', '15:35:00'),
+(3,  5, '2024-03-03', '21:00:00'),
+(4,  7, '2024-03-01', '18:11:00'),
+(5,  7, '2024-03-04', '18:51:00'),
+(6,  9, '2024-03-01', '19:00:00'),
+(7,  11, '2024-03-05', '17:15:00'),
+(8,  11, '2024-04-01', '12:10:00');
