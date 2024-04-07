@@ -302,6 +302,14 @@ int getMostRecentOrderNo() {
     return recentOrderNo;
 }
 
+void removeOrder(int orderNo){
+    
+
+    string q = "DELETE FROM FoodOrder WHERE orderNo = " + to_string(orderNo);
+    query(q);
+
+}
+
 
 
 
