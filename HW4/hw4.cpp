@@ -35,6 +35,7 @@ void menu();
 void Order(const string dishName);
 void displayOrdersForRestaurant(const string restaurantName,const string city);
 int OrderNum;
+int getMostRecentOrderNo();
 
 
  
@@ -267,7 +268,7 @@ void Order(const string dishName){
     ssTime << put_time(localtime(&in_time_t), "%H:%M:%S");
     string date = ssDate.str();
     string time = ssTime.str();
-    OrderNum += 1;
+    OrderNum = getMostRecentOrderNo() + 1;
     to_string(OrderNum);
 
     string l = "INSERT INTO FoodOrder VALUES (" + to_string(OrderNum) + ", " + input + ", '" + date + "', '" + time + "')";
@@ -284,6 +285,21 @@ void displayOrdersForRestaurant(const string restaurantName,const string city){
                              "JOIN Restaurant R ON MI.restaurantNo = R.restaurantID "
                              "WHERE R.restaurantName = " + restaurantName + " AND R.city = " + city;
     query(ordersQuery);
+}
+int getMostRecentOrderNo() {
+    int recentOrderNo = -1; // Initialize to an invalid value to indicate not found
+    try {
+        std::unique_ptr<sql::Statement> stmt(con->createStatement());
+        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery("SELECT MAX(orderNo) AS mostRecentOrderNo FROM FoodOrder"));
+        
+        if (resultSet->next()) {
+            recentOrderNo = resultSet->getInt("mostRecentOrderNo");
+        }
+    } catch (sql::SQLException &e) {
+        cout << "SQL Exception: " << e.what() << endl;
+        // Handle other errors as needed
+    }
+    return recentOrderNo;
 }
 
 
