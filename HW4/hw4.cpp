@@ -33,6 +33,7 @@ void printHeader(sql::ResultSetMetaData *metaData, int numColumns);
 void findMenuItemsByRestaurantAndCity(const string& restaurantName, const string& city);
 void menu();
 void Order(const string dishName);
+void displayOrdersForRestaurant(const string restaurantName,const string city);
 int OrderNum;
 
 
