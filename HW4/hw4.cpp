@@ -97,7 +97,7 @@ void menu(){
         "3) List all food orders for a particular restaurant"
         "4) Cancel a food order"
         "5) Add a new dish for a restaurant"
-        "6) Quit"
+        "6) Quit";
 }
 
 // Connect to the database
