@@ -9,6 +9,7 @@
 #include <cppconn/resultset_metadata.h>
 #include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>
+#include <iostream>
  
 using namespace std;
  
@@ -28,7 +29,7 @@ void printRecords(sql::ResultSet *resultSet, int numColumns);
 void printHeader(sql::ResultSetMetaData *metaData, int numColumns);
 void findMenuItemsByRestaurantAndCity(const string& restaurantName, const string& city);
 void menu();
-int x = 0;
+
  
 
 int main() 
@@ -36,6 +37,8 @@ int main()
  
     string Username = "brw020";             // Change to your own username
     string mysqlPassword = "ar6Phis7";   // Change to your own mysql password
+    int x = 0;
+    int selection;
 
     initDatabase(Username, mysqlPassword, Username); //init and testing - use it to enter your queries
 
@@ -88,7 +91,7 @@ int main()
 }   
 
 void menu(){
-    coud <<endl <<
+    cout <<endl <<
         "1) Find menu items for a restaurant"
         "2) Order an available menu item from a particular restaurant"
         "3) List all food orders for a particular restaurant"
