@@ -92,12 +92,13 @@ int main()
 
 void menu(){
     cout <<endl <<
-        "1) Find menu items for a restaurant"
-        "2) Order an available menu item from a particular restaurant"
-        "3) List all food orders for a particular restaurant"
-        "4) Cancel a food order"
-        "5) Add a new dish for a restaurant"
-        "6) Quit";
+        "1) Find menu items for a restaurant"<<endl
+        "2) Order an available menu item from a particular restaurant"<<endl
+        "3) List all food orders for a particular restaurant"<<endl
+        "4) Cancel a food order"<<endl
+        "5) Add a new dish for a restaurant"<<endl
+        "6) Exit"<<endl;
+        
 }
 
 // Connect to the database
