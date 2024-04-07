@@ -76,6 +76,12 @@ int main()
             }
             case 3: {
                 // List all food orders for a particular restaurant
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
+                cout << "Enter restaurant name: ";
+                getline(cin, restaurantName);
+                cout << "Enter city: ";
+                getline(cin, city);
+                displayOrdersForRestaurant(restaurantName, city);
                 break;
             }
             case 4: {
@@ -267,9 +273,16 @@ void Order(const string dishName){
     query(l);
     string s = "SELECT * FROM FoodOrder";
     query(s);
+}
 
 
-
+void displayOrdersForRestaurant(const string restaurantName,const string city){
+    string q = "SELECT MI.itemNo, R.restaurantName, R.city, MI.price "
+               "FROM MenuItem MI "
+               "JOIN Dish D ON MI.dishNo = D.dishNo "
+               "JOIN Restaurant R ON MI.restaurantNo = R.restaurantID "
+               "WHERE R.restaurantName = '" + restaurantName + "' AND R.city = '" + city + "'";
+    query(q);
 }
 
 
