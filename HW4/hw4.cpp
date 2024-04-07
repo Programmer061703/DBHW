@@ -71,6 +71,7 @@ int main()
             }
             case 2: {
                 // Order an available menu item from a particular restaurant
+
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
                 cout << "Enter dish name: ";
                 getline(cin, dishName);
@@ -89,6 +90,7 @@ int main()
             }
             case 4: {
                 // Cancel a food order
+                query("SELECT * FROM FoodOrder");
                 cout << "Enter order number: ";
                 cin >> orderNo;
                 removeOrder(stoi(orderNo));
@@ -309,8 +311,7 @@ int getMostRecentOrderNo() {
 
 void removeOrder(int orderNo){
     
-    string show = "SELECT * FROM FoodOrder";
-    query(show);
+    
     string q = "DELETE FROM FoodOrder WHERE orderNo = " + to_string(orderNo);
     query(q);
 
