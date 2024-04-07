@@ -91,7 +91,7 @@ int main()
                 // Cancel a food order
                 cout << "Enter order number: ";
                 cin >> orderNo;
-                removeOrder(orderNo);
+                removeOrder(stoi(orderNo));
 
                 break;
             }
