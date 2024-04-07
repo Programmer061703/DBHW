@@ -48,7 +48,7 @@ int main()
     string mysqlPassword = "ar6Phis7";   // Change to your own mysql password
     int x = 0;
     int selection;
-    string restaurantName, city, dishName;
+    string restaurantName, city, dishName, orderNo;
     initDatabase(Username, mysqlPassword, Username); //init and testing - use it to enter your queries
 
     while (x != 1) {
@@ -89,6 +89,10 @@ int main()
             }
             case 4: {
                 // Cancel a food order
+                cout << "Enter order number: ";
+                cin >> orderNo;
+                removeOrder(orderNo);
+
                 break;
             }
             case 5: {
