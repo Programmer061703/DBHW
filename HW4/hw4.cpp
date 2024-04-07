@@ -309,6 +309,7 @@ int getMostRecentOrderNo() {
 
 void removeOrder(int orderNo){
     
+    string show = "SELECT * FROM FoodOrder"
 
     string q = "DELETE FROM FoodOrder WHERE orderNo = " + to_string(orderNo);
     query(q);
