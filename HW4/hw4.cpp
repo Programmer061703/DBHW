@@ -261,9 +261,10 @@ void Order(const string dishName){
     string date = ssDate.str();
     string time = ssTime.str();
     OrderNum += 1;
+    to_string(OrderNum);
 
     string values = to_string(OrderNum) + ", " + input + ", '" + date + "', '" + time + "'";
-    insert("Order", values);
+    insert("Order", OrderNum + ", " + input + ", '" + date + "', '" + time + "'");
 
     string s = "SELECT * FROM FoodOrder";
     query(s);
