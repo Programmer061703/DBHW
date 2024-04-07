@@ -278,11 +278,11 @@ void Order(const string dishName){
 
 
 void displayOrdersForRestaurant(const string restaurantName,const string city){
-    string q = "SELECT MI.itemNo, R.restaurantName, R.city, MI.price "
-               "FROM MenuItem MI "
-               "JOIN Dish D ON MI.dishNo = D.dishNo "
-               "JOIN Restaurant R ON MI.restaurantNo = R.restaurantID "
-               "WHERE R.restaurantName = '" + restaurantName + "' AND R.city = '" + city + "'";
+    string ordersQuery = "SELECT D.dishName, MI.price, FO.date, FO.time FROM FoodOrder FO "
+                             "JOIN MenuItem MI ON FO.itemNo = MI.itemNo "
+                             "JOIN Dish D ON MI.dishNo = D.dishNo "
+                             "JOIN Restaurant R ON MI.restaurantNo = R.restaurantID "
+                             "WHERE R.restaurantID = " + to_string(restaurantID);
     query(q);
 }
 
