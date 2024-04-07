@@ -31,29 +31,68 @@ void printHeader(sql::ResultSetMetaData *metaData, int numColumns);
 int main() 
 {
  
-    string Username = "MYUSERNAME";             // Change to your own username
-    string mysqlPassword = "MYMYSQLPASSWORD";   // Change to your own mysql password
+    string Username = "brw020";             // Change to your own username
+    string mysqlPassword = "ar6Phis7";   // Change to your own mysql password
 
     initDatabase(Username, mysqlPassword, Username); //init and testing - use it to enter your queries
 
-    cout << "\nTesting select:\n";
-    query("SELECT * FROM DEPT");
-
-    cout << "\nTesting insert of dept MATH:\n";
-    insert ("DEPT", "'MATH', 'Mathematics', 309, 'SCEN'"); 
-    query("SELECT * FROM DEPT WHERE DEPT_CODE = 'MATH';");
-
-    cout << "\nTesting delete of dept MATH:";
-    statement->executeUpdate("DELETE FROM DEPT WHERE DEPT_CODE = 'MATH';");
-    query("SELECT * FROM DEPT WHERE DEPT_CODE = 'MATH';");
-
-    cout << "\nTesting update of professor name:";
-    query("SELECT * FROM PROFESSOR WHERE PROF_ID = 123456;");
-    statement->executeUpdate("Update PROFESSOR set PROF_NAME = 'Susan Dyer' WHERE PROF_ID = 123456;");
-    query("SELECT * FROM PROFESSOR WHERE PROF_ID = 123456;");    
+    while (x != 1) {
+        menu();
+        while(!(cin >> selection)){
+        cout << "Please enter a valid number" << endl; 
+        cin.clear();
+        cin.ignore(123,'\n');
+        }
+        switch (selection) {
+            case 1: {
+                string restaurantName, city;
+                cout << "Enter restaurant name: ";
+                cin >> restaurantName;
+                cout << "Enter city: ";
+                cin >> city;
+                findMenuItemsByRestaurantAndCity(restaurantName, city);
+                break;
+            }
+            case 2: {
+                // Order an available menu item from a particular restaurant
+                break;
+            }
+            case 3: {
+                // List all food orders for a particular restaurant
+                break;
+            }
+            case 4: {
+                // Cancel a food order
+                break;
+            }
+            case 5: {
+                // Add a new dish for a restaurant
+                break;
+            }
+            case 6: {
+                x = 1;
+                break;
+            }
+            default: {
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+            }
+        }
+    }
+        
 
     disconnect();   
 }   
+
+void menu(){
+    coud <<endl <<
+        "1) Find menu items for a restaurant"
+        "2) Order an available menu item from a particular restaurant"
+        "3) List all food orders for a particular restaurant"
+        "4) Cancel a food order"
+        "5) Add a new dish for a restaurant"
+        "6) Quit"
+}
 
 // Connect to the database
 sql::Connection* Connect(const string Username, const string Password)
@@ -172,3 +211,17 @@ void initDatabase(const string Username, const string Password, const string Sch
         // Create a MYSQL statement to hold queries
         statement = con->createStatement();
 }
+
+void findMenuItemsByRestaurantAndCity(const string& restaurantName, const string& city) {
+    string q = "SELECT MI.itemNo, D.dishName, MI.price "
+               "FROM MenuItem MI "
+               "JOIN Dish D ON MI.dishNo = D.dishNo "
+               "JOIN Restaurant R ON MI.restaurantNo = R.restaurantID "
+               "WHERE R.restaurantName = '" + restaurantName + "' AND R.city = '" + city + "'";
+    query(q);
+}
+
+
+
+
+
