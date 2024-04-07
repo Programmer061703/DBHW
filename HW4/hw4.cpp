@@ -52,12 +52,13 @@ int main()
         switch (selection) {
             case 1: {
                 
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
                 cout << "Enter restaurant name: ";
-                cin >> restaurantName;
+                getline(cin, restaurantName); 
                 cout << "Enter city: ";
-                cin >> city;
+                getline(cin, city); 
                 findMenuItemsByRestaurantAndCity(restaurantName, city);
-                break;
+    break;
             }
             case 2: {
                 // Order an available menu item from a particular restaurant
