@@ -39,7 +39,7 @@ int main()
     string mysqlPassword = "ar6Phis7";   // Change to your own mysql password
     int x = 0;
     int selection;
-
+    string restaurantName, city;
     initDatabase(Username, mysqlPassword, Username); //init and testing - use it to enter your queries
 
     while (x != 1) {
@@ -51,7 +51,7 @@ int main()
         }
         switch (selection) {
             case 1: {
-                string restaurantName, city;
+                
                 cout << "Enter restaurant name: ";
                 cin >> restaurantName;
                 cout << "Enter city: ";
