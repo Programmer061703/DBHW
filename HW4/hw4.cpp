@@ -282,7 +282,7 @@ void displayOrdersForRestaurant(const string restaurantName,const string city){
                              "JOIN MenuItem MI ON FO.itemNo = MI.itemNo "
                              "JOIN Dish D ON MI.dishNo = D.dishNo "
                              "JOIN Restaurant R ON MI.restaurantNo = R.restaurantID "
-                             "WHERE R.restaurantID = " + to_string(restaurantID);
+                             "WHERE R.restaurantName = " + to_string(restaurantName) + " AND R.city = " + to_string(city);
     query(q);
 }
 
