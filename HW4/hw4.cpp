@@ -10,6 +10,9 @@
 #include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>
 #include <iostream>
+#include <chrono>
+#include <iomanip>
+#include <ctime>
  
 using namespace std;
  
@@ -29,6 +32,8 @@ void printRecords(sql::ResultSet *resultSet, int numColumns);
 void printHeader(sql::ResultSetMetaData *metaData, int numColumns);
 void findMenuItemsByRestaurantAndCity(const string& restaurantName, const string& city);
 void menu();
+int OrderNum;
+
 
  
 
@@ -39,7 +44,7 @@ int main()
     string mysqlPassword = "ar6Phis7";   // Change to your own mysql password
     int x = 0;
     int selection;
-    string restaurantName, city;
+    string restaurantName, city, dishName;
     initDatabase(Username, mysqlPassword, Username); //init and testing - use it to enter your queries
 
     while (x != 1) {
@@ -62,6 +67,10 @@ int main()
             }
             case 2: {
                 // Order an available menu item from a particular restaurant
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
+                cout << "Enter dish name: ";
+                getline(cin, dishName);
+                Order(dishName);
                 break;
             }
             case 3: {
@@ -228,6 +237,38 @@ void findMenuItemsByRestaurantAndCity(const string& restaurantName, const string
                "JOIN Restaurant R ON MI.restaurantNo = R.restaurantID "
                "WHERE R.restaurantName = '" + restaurantName + "' AND R.city = '" + city + "'";
     query(q);
+}
+
+void Order(const string dishName){
+    string q = "SELECT MI.itemNo, R.restaurantName,R.city"
+                "FROM MenuItem MI"
+                "JOIN Dish D ON MI.dishNo = D.dishNo"
+                "JOIN Restaurant R ON MI.restaurantNo = R.restaurantID"
+                "WHERE D.dishName = '" + dishName + "'";
+    query(q);
+    
+    string input;
+    cout << "Enter the item number of the dish you would like to order: ";
+    cin >> input;
+
+    
+    auto now = chrono::system_clock::now();
+    auto in_time_t = chrono::system_clock::to_time_t(now);
+    std::stringstream ssDate, ssTime;
+    ssDate << put_time(localtime(&in_time_t), "%Y-%m-%d");
+    ssTime << put_time(localtime(&in_time_t), "%H:%M:%S");
+    string date = ssDate.str();
+    string time = ssTime.str();
+    OrderNum += 1;
+
+    string values = to_string(OrderNum) + ", " + input + ", '" + date + "', '" + time + "'";
+    insert("Order", values);
+
+    string s = "SELECT * FROM FoodOrder";
+    query(s);
+
+
+
 }
 
 
