@@ -5,7 +5,7 @@ set -e -v
 # ./hw3_soln.sh
 
 echo "Compiling..."
- g++ -Wall -I /usr/include/cppconn odbc_example.cpp -L /usr/lib -l mysqlcppconn -o odbc_example.exe
+ g++ -Wall -I /usr/include/cppconn odbc_example.cpp -L /usr/lib -l mysqlcppconn -o hw4.exe
 
 echo "Running..."
-./odbc_example.exe
+./hw4.exe
