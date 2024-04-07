@@ -263,8 +263,8 @@ void Order(const string dishName){
     OrderNum += 1;
     to_string(OrderNum);
 
-    string s = "INSERT INTO FoodOrder VALUES (" + to_string(OrderNum) + ", " + input + ", '" + date + "', '" + time + "')";
-
+    string l = "INSERT INTO FoodOrder VALUES (" + to_string(OrderNum) + ", " + input + ", '" + date + "', '" + time + "')";
+    query(l);
     string s = "SELECT * FROM FoodOrder";
     query(s);
 
