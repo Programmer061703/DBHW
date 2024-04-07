@@ -26,6 +26,9 @@ void print (sql::ResultSet *resultSet);
 void disconnect();
 void printRecords(sql::ResultSet *resultSet, int numColumns);
 void printHeader(sql::ResultSetMetaData *metaData, int numColumns);
+void findMenuItemsByRestaurantAndCity(const string& restaurantName, const string& city);
+void menu();
+int x = 0;
  
 
 int main() 
