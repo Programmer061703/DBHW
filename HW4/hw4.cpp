@@ -60,6 +60,7 @@ int main()
     int selection;
     string restaurantName, city, dishName, orderNo;
     initDatabase(Username, mysqlPassword, Username); //init and testing - use it to enter your queries
+    string dis = "SELECT * FROM Dish";
 
     while (x != 1) {
         menu();
@@ -89,6 +90,8 @@ int main()
             }
             case 2: {
                 // Order an available menu item from a particular restaurant
+                
+                 query(dis);
 
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
                 cout << "Enter dish name: ";
@@ -296,8 +299,7 @@ void findMenuItemsByRestaurantAndCity(const string& restaurantName, const string
 
 void Order(const string dishName){
 
-    string dis = "SELECT * FROM Dish";
-    query(dis);
+    
     string q = "SELECT MI.itemNo, R.restaurantName, R.city, MI.price "
                "FROM MenuItem MI "
                "JOIN Dish D ON MI.dishNo = D.dishNo "
