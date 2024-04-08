@@ -56,7 +56,6 @@ int main()
     int selection;
     string restaurantName, city, dishName, orderNo;
     initDatabase(Username, mysqlPassword, Username); //init and testing - use it to enter your queries
-    Check check(con);
 
     while (x != 1) {
         menu();
