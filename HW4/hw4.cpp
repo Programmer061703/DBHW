@@ -41,6 +41,8 @@ int getMostRecentOrderNo();
 void removeOrder(int orderNo);
 bool checkRestaurantExists(const string& restaurantName);
 bool checkCityExists(const string& city);
+bool checkOrderExists(int orderNo);
+bool checkDishExists(const string& dishName);
 
 
  
