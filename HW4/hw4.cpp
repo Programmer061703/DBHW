@@ -387,6 +387,8 @@ void newDish(){
     cout << "Enter Price of Dish: ";
     getline(cin, dishPrice);
 
+
+    string r = "SELECT * FROM Dish";
     cout << "Enter the dish number of the dish you would like to add: ";
     getline(cin, dishNo);
     if(checkDishNoExists(dishNo)) {
