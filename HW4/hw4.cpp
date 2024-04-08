@@ -444,6 +444,7 @@ query(displayResPri);
     query(s);
     string t = "SELECT * FROM MenuItem";
     query(t);
+    query(displayResPri);
 }
 
 
