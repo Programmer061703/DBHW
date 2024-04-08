@@ -383,13 +383,7 @@ void newDish(){
         cout << "City does not exist." << endl;
         return;
     }
-
-    string query = "SELECT D.dishName, MI.price "
-                        "FROM Restaurant R "
-                        "JOIN MenuItem MI ON R.restaurantID = MI.restaurantNo "
-                        "JOIN Dish D ON MI.dishNo = D.dishNo "
-                        "WHERE R.restaurantName = '" + restaurantName + "' AND R.city = '" + city + "'";
-    query(query);
+    
     
     cout << "Enter Dish You Would Like to Add: ";
     getline(cin, dishName);
