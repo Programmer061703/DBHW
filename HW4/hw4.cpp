@@ -43,7 +43,7 @@ bool checkRestaurantExists(const string& restaurantName);
 bool checkCityExists(const string& city);
 bool checkOrderExists(int orderNo);
 bool checkDishExists(const string& dishName);
-bool itemExists(int itemNo);
+bool itemExists(int itemNo, const string& dishName);
 
 
  
