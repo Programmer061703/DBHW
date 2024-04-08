@@ -1,0 +1,315 @@
+Script started on 2024-04-08 17:54:37-0500
+groups: cannot find name for group ID 762800513
+]0;brw020@turing: ~/junior_second_semester/DBHW/HW4[01;32mbrw020@turing[00m:[01;34m~/junior_second_semester/DBHW/HW4[00m$ ./compileandruncpp.sh 
+
+# echo "Creating and filling tables from HW3 solution..."
+# ./hw3_soln.sh
+
+echo "Compiling..."
+Compiling...
+ g++ -Wall -I /usr/include/cppconn hw4.cpp -L /usr/lib -l mysqlcppconn -o hw4.exe
+
+echo "Running..."
+Running...
+./hw4.exe
+
+1) Find menu items for a restaurant
+2) Order an available menu item from a particular restaurant
+3) List all food orders for a particular restaurant
+4) Cancel a food order
+5) Add a new dish for a restaurant
+6) Exit
+1
+Enter restaurant name: Eureka Pizza
+Enter city: Fayetteville
+---------------------------------
+Query: 
+SELECT MI.itemNo, D.dishName, MI.price FROM MenuItem MI JOIN Dish D ON MI.dishNo = D.dishNo JOIN Restaurant R ON MI.restaurantNo = R.restaurantID WHERE R.restaurantName = 'Eureka Pizza' AND R.city = 'Fayetteville'
+
+Result: 
+itemNo,  dishName,  price
+5,  Salad,  6.25
+6,  Garlic Bread,  5.50
+7,  Cheese Pizza,  12.50
+8,  Pepperoni Pizza,  13.50
+
+1) Find menu items for a restaurant
+2) Order an available menu item from a particular restaurant
+3) List all food orders for a particular restaurant
+4) Cancel a food order
+5) Add a new dish for a restaurant
+6) Exit
+1
+Enter restaurant name: Slims Chicken
+Restaurant does not exist.
+
+1) Find menu items for a restaurant
+2) Order an available menu item from a particular restaurant
+3) List all food orders for a particular restaurant
+4) Cancel a food order
+5) Add a new dish for a restaurant
+6) Exit
+1
+Enter restaurant name: Eureka Pizza
+Enter city: Rogers
+City does not exist.
+
+1) Find menu items for a restaurant
+2) Order an available menu item from a particular restaurant
+3) List all food orders for a particular restaurant
+4) Cancel a food order
+5) Add a new dish for a restaurant
+6) Exit
+2
+---------------------------------
+Query: 
+SELECT * FROM Dish
+
+Result: 
+dishNo,  dishName,  type
+1,  Curry,  ap
+7,  Cheese Pizza,  en
+10,  Custard,  ds
+12,  Garlic Bread,  ap
+13,  Spring Rolls,  ap
+15,  Pad Thai,  en
+16,  Pot Stickers,  ap
+19,  Pepperoni Pizza,  en
+22,  Masaman Curry,  en
+23,  BBQ,  en
+44,  Salad,  ap
+77,  Veggie Supreme Pizza,  en
+88,  BBQ2,  en
+Enter dish name: Spring Rolls
+---------------------------------
+Query: 
+SELECT MI.itemNo, R.restaurantName, R.city, MI.price FROM MenuItem MI JOIN Dish D ON MI.dishNo = D.dishNo JOIN Restaurant R ON MI.restaurantNo = R.restaurantID WHERE D.dishName = 'Spring Rolls'
+
+Result: 
+itemNo,  restaurantName,  city,  price
+0,  Tasty Thai,  Dallas,  8.00
+9,  Tasty Thai,  Las Vegas,  6.00
+Enter the item number of the dish you would like to order: 9
+ERROR: SQLException in hw4.cpp (query) on line 212
+ERROR:  (MySQL error code: 0, SQLState: 00000)
+---------------------------------
+Query: 
+SELECT * FROM FoodOrder
+
+Result: 
+orderNo,  itemNo,  date,  time
+1,  9,  2024-04-07,  19:37:30
+2,  0,  2024-04-07,  20:00:50
+3,  9,  2024-04-08,  17:55:43
+
+1) Find menu items for a restaurant
+2) Order an available menu item from a particular restaurant
+3) List all food orders for a particular restaurant
+4) Cancel a food order
+5) Add a new dish for a restaurant
+6) Exit
+2
+---------------------------------
+Query: 
+SELECT * FROM Dish
+
+Result: 
+dishNo,  dishName,  type
+1,  Curry,  ap
+7,  Cheese Pizza,  en
+10,  Custard,  ds
+12,  Garlic Bread,  ap
+13,  Spring Rolls,  ap
+15,  Pad Thai,  en
+16,  Pot Stickers,  ap
+19,  Pepperoni Pizza,  en
+22,  Masaman Curry,  en
+23,  BBQ,  en
+44,  Salad,  ap
+77,  Veggie Supreme Pizza,  en
+88,  BBQ2,  en
+Enter dish name: Classic Meal
+Dish does not exist.
+
+1) Find menu items for a restaurant
+2) Order an available menu item from a particular restaurant
+3) List all food orders for a particular restaurant
+4) Cancel a food order
+5) Add a new dish for a restaurant
+6) Exit
+3
+Enter restaurant name: Eureka Pizza
+Enter city: Fayetteville
+---------------------------------
+Query: 
+SELECT D.dishName, MI.price, FO.date, FO.time FROM FoodOrder FO JOIN MenuItem MI ON FO.itemNo = MI.itemNo JOIN Dish D ON MI.dishNo = D.dishNo JOIN Restaurant R ON MI.restaurantNo = R.restaurantID WHERE R.restaurantName = 'Eureka Pizza' AND R.city = 'Fayetteville'
+
+Result: 
+
+1) Find menu items for a restaurant
+2) Order an available menu item from a particular restaurant
+3) List all food orders for a particular restaurant
+4) Cancel a food order
+5) Add a new dish for a restaurant
+6) Exit
+3
+Enter restaurant name: Tasty Thai
+Enter city: Dallas
+---------------------------------
+Query: 
+SELECT D.dishName, MI.price, FO.date, FO.time FROM FoodOrder FO JOIN MenuItem MI ON FO.itemNo = MI.itemNo JOIN Dish D ON MI.dishNo = D.dishNo JOIN Restaurant R ON MI.restaurantNo = R.restaurantID WHERE R.restaurantName = 'Tasty Thai' AND R.city = 'Dallas'
+
+Result: 
+dishName,  price,  date,  time
+Spring Rolls,  8.00,  2024-04-07,  20:00:50
+
+1) Find menu items for a restaurant
+2) Order an available menu item from a particular restaurant
+3) List all food orders for a particular restaurant
+4) Cancel a food order
+5) Add a new dish for a restaurant
+6) Exit
+3
+Enter restaurant name: Eureka Pizza
+Enter city: Bentonville
+City does not exist.
+
+1) Find menu items for a restaurant
+2) Order an available menu item from a particular restaurant
+3) List all food orders for a particular restaurant
+4) Cancel a food order
+5) Add a new dish for a restaurant
+6) Exit
+3 4
+---------------------------------
+Query: 
+SELECT * FROM FoodOrder
+
+Result: 
+orderNo,  itemNo,  date,  time
+1,  9,  2024-04-07,  19:37:30
+2,  0,  2024-04-07,  20:00:50
+3,  9,  2024-04-08,  17:55:43
+Enter order number: 3
+ERROR: SQLException in hw4.cpp (query) on line 212
+ERROR:  (MySQL error code: 0, SQLState: 00000)
+---------------------------------
+Query: 
+SELECT * FROM FoodOrder
+
+Result: 
+orderNo,  itemNo,  date,  time
+1,  9,  2024-04-07,  19:37:30
+2,  0,  2024-04-07,  20:00:50
+
+1) Find menu items for a restaurant
+2) Order an available menu item from a particular restaurant
+3) List all food orders for a particular restaurant
+4) Cancel a food order
+5) Add a new dish for a restaurant
+6) Exit
+5
+---------------------------------
+Query: 
+SELECT * FROM Restaurant
+
+Result: 
+restaurantID,  restaurantName,  type,  city
+0,  Tasty Thai,  Asian,  Dallas
+3,  Eureka Pizza,  Pizza,  Fayetteville
+5,  Tasty Thai,  Asian,  Las Vegas
+Enter the name of the restaurant you would like to add the dish to: Tasty Thai
+Enter the name of the city the restaurant is located in:Dallas
+---------------------------------
+Query: 
+SELECT D.dishName, MI.price FROM Restaurant R JOIN MenuItem MI ON R.restaurantID = MI.restaurantNo JOIN Dish D ON MI.dishNo = D.dishNo WHERE R.restaurantName = 'Tasty Thai' AND R.city = 'Dallas'
+
+Result: 
+dishName,  price
+Spring Rolls,  8.00
+Pot Stickers,  9.00
+Salad,  10.00
+Pad Thai,  19.00
+Masaman Curry,  19.00
+BBQ,  22.00
+BBQ2,  8.99
+Enter Dish You Would Like to Add: Pasta Shrimp
+Enter Type of Dish (ap = Appetizer, en = Entree, ds = Dessert): en
+Enter Price of Dish: 8.99
+---------------------------------
+Query: 
+SELECT * FROM Dish
+
+Result: 
+dishNo,  dishName,  type
+1,  Curry,  ap
+7,  Cheese Pizza,  en
+10,  Custard,  ds
+12,  Garlic Bread,  ap
+13,  Spring Rolls,  ap
+15,  Pad Thai,  en
+16,  Pot Stickers,  ap
+19,  Pepperoni Pizza,  en
+22,  Masaman Curry,  en
+23,  BBQ,  en
+44,  Salad,  ap
+77,  Veggie Supreme Pizza,  en
+88,  BBQ2,  en
+Enter the dish number of the dish you would like to add: 89
+ERROR: SQLException in hw4.cpp (query) on line 212
+ERROR:  (MySQL error code: 0, SQLState: 00000)
+ERROR: SQLException in hw4.cpp (query) on line 212
+ERROR:  (MySQL error code: 0, SQLState: 00000)
+---------------------------------
+Query: 
+SELECT * FROM Dish
+
+Result: 
+dishNo,  dishName,  type
+1,  Curry,  ap
+7,  Cheese Pizza,  en
+10,  Custard,  ds
+12,  Garlic Bread,  ap
+13,  Spring Rolls,  ap
+15,  Pad Thai,  en
+16,  Pot Stickers,  ap
+19,  Pepperoni Pizza,  en
+22,  Masaman Curry,  en
+23,  BBQ,  en
+44,  Salad,  ap
+77,  Veggie Supreme Pizza,  en
+88,  BBQ2,  en
+89,  Pasta Shrimp,  en
+---------------------------------
+Query: 
+SELECT * FROM MenuItem
+
+Result: 
+itemNo,  restaurantNo,  dishNo,  price
+0,  0,  13,  8.00
+1,  0,  16,  9.00
+2,  0,  44,  10.00
+3,  0,  15,  19.00
+4,  0,  22,  19.00
+5,  3,  44,  6.25
+6,  3,  12,  5.50
+7,  3,  7,  12.50
+8,  3,  19,  13.50
+9,  5,  13,  6.00
+10,  5,  15,  15.00
+11,  5,  22,  14.00
+12,  0,  23,  22.00
+13,  0,  88,  8.99
+14,  0,  89,  8.99
+
+1) Find menu items for a restaurant
+2) Order an available menu item from a particular restaurant
+3) List all food orders for a particular restaurant
+4) Cancel a food order
+5) Add a new dish for a restaurant
+6) Exit
+6
+]0;brw020@turing: ~/junior_second_semester/DBHW/HW4[01;32mbrw020@turing[00m:[01;34m~/junior_second_semester/DBHW/HW4[00m$ exit
+exit
+
+Script done on 2024-04-08 17:57:55-0500
