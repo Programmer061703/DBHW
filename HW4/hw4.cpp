@@ -302,7 +302,7 @@ void Order(const string dishName){
     cout << "Enter the item number of the dish you would like to order: ";
     cin >> input;
 
-    if(!itemExists(input,dishName)) {
+    if(!itemExists(stoi(input),dishName)) {
                     cout << "Order does not exist." << endl;
                     return;
     }
@@ -426,22 +426,22 @@ bool checkDishExists(const string& dishName) {
     return exists;
 }
 
-bool itemExists(int itemNo, const std::string& dishName) {
+bool itemExists(int itemNo, const string& dishName) {
     // Adjust the query to check itemNo against a specific dishName
-    std::string query = "SELECT EXISTS("
+    string query = "SELECT EXISTS("
                             "SELECT 1 "
                             "FROM MenuItem MI "
                             "JOIN Dish D ON MI.dishNo = D.dishNo "
-                            "WHERE MI.itemNo = " + std::to_string(itemNo) + 
+                            "WHERE MI.itemNo = " + to_string(itemNo) + 
                             " AND D.dishName = '" + dishName + "') AS `exists`";
     try {
-        std::unique_ptr<sql::Statement> stmt(con->createStatement());
-        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        unique_ptr<sql::Statement> stmt(con->createStatement());
+        unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
         if (resultSet->next()) {
             return resultSet->getInt("exists") == 1;
         }
     } catch (sql::SQLException &e) {
-        std::cout << "SQL Exception in itemExists: " << e.what() << std::endl;
+        cout << "SQL Exception in itemExists: " << e.what() << endl;
     }
     return false;
 }
