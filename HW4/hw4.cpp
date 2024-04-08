@@ -13,6 +13,8 @@
 #include <chrono>
 #include <iomanip>
 #include <ctime>
+#include "check.h"
+
  
 using namespace std;
  
@@ -52,6 +54,7 @@ int main()
     int selection;
     string restaurantName, city, dishName, orderNo;
     initDatabase(Username, mysqlPassword, Username); //init and testing - use it to enter your queries
+    Check check(con);
 
     while (x != 1) {
         menu();
@@ -66,13 +69,13 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
                 cout << "Enter restaurant name: ";
                 getline(cin, restaurantName); 
-                if(!checkRestaurantExists(restaurantName)) {
+                if(!check.restaurantExists(restaurantName)) {
                     cout << "Restaurant does not exist." << endl;
                     break;
                 }
                 cout << "Enter city: ";
                 getline(cin, city); 
-                if(!checkCityExists(city)) {
+                if(!check.cityExists(city)) {
                     cout << "City does not exist." << endl;
                     break;
                 }
@@ -84,6 +87,7 @@ int main()
 
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
                 cout << "Enter dish name: ";
+
                 getline(cin, dishName);
                 Order(dishName);
                 break;
@@ -93,8 +97,16 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
                 cout << "Enter restaurant name: ";
                 getline(cin, restaurantName);
+                if(!checkRestaurantExists(restaurantName)) {
+                    cout << "Restaurant does not exist." << endl;
+                    break;
+                }
                 cout << "Enter city: ";
                 getline(cin, city);
+                if(!checkCityExists(city)) {
+                    cout << "City does not exist." << endl;
+                    break;
+                }
                 displayOrdersForRestaurant(restaurantName, city);
                 break;
             }
@@ -103,6 +115,10 @@ int main()
                 query("SELECT * FROM FoodOrder");
                 cout << "Enter order number: ";
                 cin >> orderNo;
+                if(!checkOrderExists(stoi(orderNo))) {
+                    cout << "Order does not exist." << endl;
+                    break;
+                }
                 removeOrder(stoi(orderNo));
 
                 break;
@@ -349,6 +365,38 @@ bool checkCityExists(const string& city) {
     bool exists = false;
     string query = "SELECT EXISTS(SELECT 1 FROM Restaurant WHERE city = '" 
                     + city + "') AS `exists`";
+    try {
+        std::unique_ptr<sql::Statement> stmt(con->createStatement());
+        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        if (resultSet->next()) {
+            exists = resultSet->getInt("exists") == 1;
+        }
+    } catch (sql::SQLException &e) {
+        cout << "SQL Exception: " << e.what() << endl;
+    }
+    return exists;
+}
+
+bool checkOrderExists(int orderNo) {
+    bool exists = false;
+    string query = "SELECT EXISTS(SELECT 1 FROM FoodOrder WHERE orderNo = " 
+                    + to_string(orderNo) + ") AS `exists`";
+    try {
+        std::unique_ptr<sql::Statement> stmt(con->createStatement());
+        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        if (resultSet->next()) {
+            exists = resultSet->getInt("exists") == 1;
+        }
+    } catch (sql::SQLException &e) {
+        cout << "SQL Exception: " << e.what() << endl;
+    }
+    return exists;
+}
+
+bool checkDishExists(const string& dishName) {
+    bool exists = false;
+    string query = "SELECT EXISTS(SELECT 1 FROM Dish WHERE dishName = '" 
+                    + dishName + "') AS `exists`";
     try {
         std::unique_ptr<sql::Statement> stmt(con->createStatement());
         std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
