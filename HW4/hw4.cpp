@@ -64,8 +64,16 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
                 cout << "Enter restaurant name: ";
                 getline(cin, restaurantName); 
+                if(!checkRestaurantExists(restaurantName)) {
+                    cout << "Restaurant does not exist." << endl;
+                    break;
+                }
                 cout << "Enter city: ";
                 getline(cin, city); 
+                if(!checkCityExists(city)) {
+                    cout << "City does not exist." << endl;
+                    break;
+                }
                 findMenuItemsByRestaurantAndCity(restaurantName, city);
     break;
             }
@@ -247,6 +255,8 @@ void initDatabase(const string Username, const string Password, const string Sch
 }
 
 void findMenuItemsByRestaurantAndCity(const string& restaurantName, const string& city) {
+   
+   
     string q = "SELECT MI.itemNo, D.dishName, MI.price "
                "FROM MenuItem MI "
                "JOIN Dish D ON MI.dishNo = D.dishNo "
@@ -316,6 +326,39 @@ void removeOrder(int orderNo){
     query(q);
 
 }
+
+bool checkRestaurantExists(const string& restaurantName) {
+    bool exists = false;
+    string query = "SELECT EXISTS(SELECT 1 FROM Restaurant WHERE restaurantName = '" 
+                    + restaurantName + "') AS `exists`";
+    try {
+        std::unique_ptr<sql::Statement> stmt(con->createStatement());
+        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        if (resultSet->next()) {
+            exists = resultSet->getInt("exists") == 1;
+        }
+    } catch (sql::SQLException &e) {
+        cout << "SQL Exception: " << e.what() << endl;
+    }
+    return exists;
+}
+
+bool checkCityExists(const string& city) {
+    bool exists = false;
+    string query = "SELECT EXISTS(SELECT 1 FROM Restaurant WHERE city = '" 
+                    + city + "') AS `exists`";
+    try {
+        std::unique_ptr<sql::Statement> stmt(con->createStatement());
+        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        if (resultSet->next()) {
+            exists = resultSet->getInt("exists") == 1;
+        }
+    } catch (sql::SQLException &e) {
+        cout << "SQL Exception: " << e.what() << endl;
+    }
+    return exists;
+}
+
 
 
 
