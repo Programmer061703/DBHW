@@ -132,6 +132,23 @@ int main()
             }
             case 5: {
                 // Add a new dish for a restaurant
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
+                cout << "Enter restaurant name: ";
+                getline(cin, restaurantName);
+                if(!checkRestaurantExists(restaurantName)) {
+                    cout << "Restaurant does not exist." << endl;
+                    break;
+                }
+                cout << "Enter city: ";
+                getline(cin, city);
+                if(!checkCityExists(city)) {
+                    cout << "City does not exist." << endl;
+                    break;
+                }
+
+                newDish(restaurantName, city);
+
+
                 break;
             }
             case 6: {
@@ -338,6 +355,46 @@ void displayOrdersForRestaurant(const string restaurantName,const string city){
                              "WHERE R.restaurantName = '" + restaurantName + "' AND R.city = '" + city + "'";
     query(ordersQuery);
 }
+
+
+void removeOrder(int orderNo){
+    
+    
+    string q = "DELETE FROM FoodOrder WHERE orderNo = " + to_string(orderNo);
+    query(q);
+
+}
+
+
+void newDish(const string restaurantName, const string city){
+    string dishName, dishType, dishPrice, input;
+    
+    //string l = "INSERT INTO Dish VALUES (" + to_string(OrderNum) + ", " + input + ", '" + date + "', '" + time + "')";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
+    cout << "Enter Dish You Would Like to Add: ";
+    getline(cin, dishName);
+
+    cout << "Enter Type of Dish (ap = Appetizer, en = Entree, ds = Dessert): "; 
+    getline(cin, dishType);
+
+    cout << "Enter Price of Dish: ";
+    getline(cin, dishPrice);
+
+
+    
+
+    string l = "INSERT INTO Dish VALUES (" + dishName + ", " + dishType + ", " + dishPrice + ")";
+
+
+}
+
+
+
+
+
+
+// Helper Functions Bellow
+
 int getMostRecentOrderNo() {
     int recentOrderNo = -1; // Initialize to an invalid value to indicate not found
     try {
@@ -354,14 +411,21 @@ int getMostRecentOrderNo() {
     return recentOrderNo;
 }
 
-void removeOrder(int orderNo){
-    
-    
-    string q = "DELETE FROM FoodOrder WHERE orderNo = " + to_string(orderNo);
-    query(q);
-
+int getMostRecentItemNo() {
+    int recentItemNo = -1; // Initialize to an invalid value to indicate not found
+    try {
+        unique_ptr<sql::Statement> stmt(con->createStatement());
+        unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery("SELECT MAX(itemNo) AS mostRecentItemNo FROM MenuItem"));
+        
+        if (resultSet->next()) {
+            recentItemNo = resultSet->getInt("mostRecentItemNo");
+        }
+    } catch (sql::SQLException &e) {
+        cout << "SQL Exception: " << e.what() << endl;
+        // Handle other errors as needed
+    }
+    return recentItemNo;
 }
-
 bool checkRestaurantExists(const string& restaurantName) {
     bool exists = false;
     string query = "SELECT EXISTS(SELECT 1 FROM Restaurant WHERE restaurantName = '" 
@@ -445,12 +509,3 @@ bool itemExists(int itemNo, const string& dishName) {
     }
     return false;
 }
-
-
-
-
-
-
-
-
-
