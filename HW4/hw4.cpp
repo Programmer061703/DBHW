@@ -301,25 +301,18 @@ void Order(const string dishName){
     cout << "Enter the item number of the dish you would like to order: ";
     cin >> input;
 
-    // Check if input exists in the MenuItem table
-    string checkQuery = "SELECT EXISTS(SELECT 1 FROM MenuItem WHERE itemNo = " + input + ") AS `exists`";
-    try {
-        std::unique_ptr<sql::Statement> stmt(con->createStatement());
-        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(checkQuery));
-        if (resultSet->next()) {
-            if (resultSet->getInt("exists") == 0) {
-                cout << "Invalid item number. Please try again." << endl;
-                return;
-            }
-        }
-    } catch (sql::SQLException &e) {
-        cout << "SQL Exception: " << e.what() << endl;
+    if(!itemExists(stoi(input))) {
+                    cout << "Order does not exist." << endl;
+                    return;
     }
+
+    
+    
 
     
     auto now = chrono::system_clock::now();
     auto in_time_t = chrono::system_clock::to_time_t(now);
-    std::stringstream ssDate, ssTime;
+    stringstream ssDate, ssTime;
     ssDate << put_time(localtime(&in_time_t), "%Y-%m-%d");
     ssTime << put_time(localtime(&in_time_t), "%H:%M:%S");
     string date = ssDate.str();
@@ -345,8 +338,8 @@ void displayOrdersForRestaurant(const string restaurantName,const string city){
 int getMostRecentOrderNo() {
     int recentOrderNo = -1; // Initialize to an invalid value to indicate not found
     try {
-        std::unique_ptr<sql::Statement> stmt(con->createStatement());
-        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery("SELECT MAX(orderNo) AS mostRecentOrderNo FROM FoodOrder"));
+        unique_ptr<sql::Statement> stmt(con->createStatement());
+        unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery("SELECT MAX(orderNo) AS mostRecentOrderNo FROM FoodOrder"));
         
         if (resultSet->next()) {
             recentOrderNo = resultSet->getInt("mostRecentOrderNo");
@@ -371,8 +364,8 @@ bool checkRestaurantExists(const string& restaurantName) {
     string query = "SELECT EXISTS(SELECT 1 FROM Restaurant WHERE restaurantName = '" 
                     + restaurantName + "') AS `exists`";
     try {
-        std::unique_ptr<sql::Statement> stmt(con->createStatement());
-        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        unique_ptr<sql::Statement> stmt(con->createStatement());
+        unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
         if (resultSet->next()) {
             exists = resultSet->getInt("exists") == 1;
         }
@@ -387,8 +380,8 @@ bool checkCityExists(const string& city) {
     string query = "SELECT EXISTS(SELECT 1 FROM Restaurant WHERE city = '" 
                     + city + "') AS `exists`";
     try {
-        std::unique_ptr<sql::Statement> stmt(con->createStatement());
-        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        unique_ptr<sql::Statement> stmt(con->createStatement());
+        unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
         if (resultSet->next()) {
             exists = resultSet->getInt("exists") == 1;
         }
@@ -403,8 +396,8 @@ bool checkOrderExists(int orderNo) {
     string query = "SELECT EXISTS(SELECT 1 FROM FoodOrder WHERE orderNo = " 
                     + to_string(orderNo) + ") AS `exists`";
     try {
-        std::unique_ptr<sql::Statement> stmt(con->createStatement());
-        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        unique_ptr<sql::Statement> stmt(con->createStatement());
+        unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
         if (resultSet->next()) {
             exists = resultSet->getInt("exists") == 1;
         }
@@ -419,8 +412,8 @@ bool checkDishExists(const string& dishName) {
     string query = "SELECT EXISTS(SELECT 1 FROM Dish WHERE dishName = '" 
                     + dishName + "') AS `exists`";
     try {
-        std::unique_ptr<sql::Statement> stmt(con->createStatement());
-        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        unique_ptr<sql::Statement> stmt(con->createStatement());
+        unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
         if (resultSet->next()) {
             exists = resultSet->getInt("exists") == 1;
         }
@@ -428,6 +421,20 @@ bool checkDishExists(const string& dishName) {
         cout << "SQL Exception: " << e.what() << endl;
     }
     return exists;
+}
+
+itemExists(int itemNo){
+   string query = "SELECT EXISTS(SELECT 1 FROM MenuItem WHERE itemNo = " + std::to_string(itemNo) + ") AS `exists`";
+    try {
+        unique_ptr<sql::Statement> stmt(con->createStatement());
+        unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        if (resultSet->next()) {
+            return resultSet->getInt("exists") == 1;
+        }
+    } catch (sql::SQLException &e) {
+        cout << "SQL Exception in itemExists: " << e.what() << std::endl;
+    }
+    return false;
 }
 
 
