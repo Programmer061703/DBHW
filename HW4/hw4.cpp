@@ -409,7 +409,7 @@ void newDish(){
     }
 
 
-    string mostRecentItemNo = getMostRecentItemNo() + 1;
+    int mostRecentItemNo = getMostRecentItemNo() + 1;
 
 
     
