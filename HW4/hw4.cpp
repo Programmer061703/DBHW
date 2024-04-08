@@ -415,7 +415,7 @@ void newDish(){
     
 
     string l = "INSERT INTO Dish VALUES (" + dishNo + ", " + dishName + ", " + dishType + ")";
-    string m = "INSERT INTO MenuItem VALUES (" + mostRecentItemNo + ", " + restaurantNo + ", " + dishNo + ", " + dishPrice + ")";
+    string m = "INSERT INTO MenuItem VALUES (" + to_string(mostRecentItemNo) + ", " + restaurantNo + ", " + dishNo + ", " + dishPrice + ")";
     query(l);
     query(m);
     string s = "SELECT * FROM Dish";
