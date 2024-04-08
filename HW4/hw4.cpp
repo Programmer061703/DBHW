@@ -44,6 +44,7 @@ bool checkCityExists(const string& city);
 bool checkOrderExists(int orderNo);
 bool checkDishExists(const string& dishName);
 bool itemExists(int itemNo, const string& dishName);
+void newDish();   
 
 
  
@@ -132,21 +133,7 @@ int main()
             }
             case 5: {
                 // Add a new dish for a restaurant
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
-                cout << "Enter restaurant name: ";
-                getline(cin, restaurantName);
-                if(!checkRestaurantExists(restaurantName)) {
-                    cout << "Restaurant does not exist." << endl;
-                    break;
-                }
-                cout << "Enter city: ";
-                getline(cin, city);
-                if(!checkCityExists(city)) {
-                    cout << "City does not exist." << endl;
-                    break;
-                }
-
-                newDish(restaurantName, city);
+                newDish();
 
 
                 break;
@@ -366,11 +353,29 @@ void removeOrder(int orderNo){
 }
 
 
-void newDish(const string restaurantName, const string city){
-    string dishName, dishType, dishPrice, input;
+void newDish(){
+    string dishName, dishType, dishPrice, dishNo, restaurantNo, city, restaurantName;
     
-    //string l = "INSERT INTO Dish VALUES (" + to_string(OrderNum) + ", " + input + ", '" + date + "', '" + time + "')";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+
+    string q = "SELECT * FROM Restaurant";
+    query(q); 
+
+
+    cout << "Enter the name of the restaurant you would like to add the dish to: ";
+    getline(cin, restaurantName);
+    if(!checkRestaurantExists(restaurantName)) {
+        cout << "Restaurant does not exist." << endl;
+        return;
+    }
+
+    cout << "Enter the name of the city the restaurant is located in:"
+    getline(cin, city);
+    if(!checkCityExists(city)) {
+        cout << "City does not exist." << endl;
+        return;
+    }
+    
     cout << "Enter Dish You Would Like to Add: ";
     getline(cin, dishName);
 
@@ -380,12 +385,41 @@ void newDish(const string restaurantName, const string city){
     cout << "Enter Price of Dish: ";
     getline(cin, dishPrice);
 
+    cout << "Enter the dish number of the dish you would like to add: ";
+    getline(cin, dishNo);
+    if(checkDishNoExists(dishNo)) {
+        cout << "Dish number already exists." << endl;
+        return;
+    }
 
     
 
-    string l = "INSERT INTO Dish VALUES (" + dishName + ", " + dishType + ", " + dishPrice + ")";
+    
+    else if(restaurantName == "Tasty Thai" && city == "Dallas") {
+        restaurantNo = "0";
+
+    }
+    else if (restaurantName =="Tasty Thai" && city == "Las Vegas"){
+        restaurantNo = "5";
+    }
+    else if (restaurantName == "Eureka Pizza" && city == "Fayetteville"){
+        restaurantNo = "3"; 
+    }
 
 
+    string mostRecentItemNo = getMostRecentItemNo() + 1;
+
+
+    
+
+    string l = "INSERT INTO Dish VALUES (" + dishNo + ", " + dishName + ", " + dishType + ")";
+    string m = "INSERT INTO MenuItem VALUES (" + mostRecentItemNo + ", " + restaurantNo + ", " + dishNo + ", " + dishPrice + ")";
+    query(l);
+    query(m);
+    string s = "SELECT * FROM Dish";
+    query(s);
+    string t = "SELECT * FROM MenuItem";
+    query(t);
 }
 
 
@@ -406,7 +440,7 @@ int getMostRecentOrderNo() {
         }
     } catch (sql::SQLException &e) {
         cout << "SQL Exception: " << e.what() << endl;
-        // Handle other errors as needed
+       
     }
     return recentOrderNo;
 }
@@ -422,10 +456,28 @@ int getMostRecentItemNo() {
         }
     } catch (sql::SQLException &e) {
         cout << "SQL Exception: " << e.what() << endl;
-        // Handle other errors as needed
+        
     }
     return recentItemNo;
 }
+
+bool checkDishNoExists(const string& dishNo){
+    bool exists = false;
+    string query = "SELECT EXISTS(SELECT 1 FROM Dish WHERE dishNo = " 
+                    + dishNo + ") AS `exists`";
+    try {
+        unique_ptr<sql::Statement> stmt(con->createStatement());
+        unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        if (resultSet->next()) {
+            exists = resultSet->getInt("exists") == 1;
+        }
+    } catch (sql::SQLException &e) {
+        cout << "SQL Exception: " << e.what() << endl;
+    }
+    return exists;
+
+}
+
 bool checkRestaurantExists(const string& restaurantName) {
     bool exists = false;
     string query = "SELECT EXISTS(SELECT 1 FROM Restaurant WHERE restaurantName = '" 
@@ -491,7 +543,6 @@ bool checkDishExists(const string& dishName) {
 }
 
 bool itemExists(int itemNo, const string& dishName) {
-    // Adjust the query to check itemNo against a specific dishName
     string query = "SELECT EXISTS("
                             "SELECT 1 "
                             "FROM MenuItem MI "
