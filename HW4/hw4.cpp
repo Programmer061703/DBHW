@@ -44,6 +44,8 @@ bool checkCityExists(const string& city);
 bool checkOrderExists(int orderNo);
 bool checkDishExists(const string& dishName);
 bool itemExists(int itemNo, const string& dishName);
+bool checkDishNoExists(const string& dishNo);
+int getMostRecentItemNo();
 void newDish();   
 
 
@@ -369,7 +371,7 @@ void newDish(){
         return;
     }
 
-    cout << "Enter the name of the city the restaurant is located in:"
+    cout << "Enter the name of the city the restaurant is located in:";
     getline(cin, city);
     if(!checkCityExists(city)) {
         cout << "City does not exist." << endl;
