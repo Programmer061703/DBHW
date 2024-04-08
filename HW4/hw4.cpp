@@ -389,6 +389,7 @@ void newDish(){
 
 
     string r = "SELECT * FROM Dish";
+    query(r);
     cout << "Enter the dish number of the dish you would like to add: ";
     getline(cin, dishNo);
     if(checkDishNoExists(dishNo)) {
