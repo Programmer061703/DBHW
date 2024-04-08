@@ -89,7 +89,12 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
                 cout << "Enter dish name: ";
 
+
                 getline(cin, dishName);
+                if(!checkDishExists(dishName)) {
+                    cout << "Dish does not exist." << endl;
+                    break;
+                }
                 Order(dishName);
                 break;
             }
