@@ -43,6 +43,7 @@ bool checkRestaurantExists(const string& restaurantName);
 bool checkCityExists(const string& city);
 bool checkOrderExists(int orderNo);
 bool checkDishExists(const string& dishName);
+bool itemExists(int itemNo);
 
 
  
@@ -423,7 +424,7 @@ bool checkDishExists(const string& dishName) {
     return exists;
 }
 
-itemExists(int itemNo){
+bool itemExists(int itemNo){
    string query = "SELECT EXISTS(SELECT 1 FROM MenuItem WHERE itemNo = " + std::to_string(itemNo) + ") AS `exists`";
     try {
         unique_ptr<sql::Statement> stmt(con->createStatement());
