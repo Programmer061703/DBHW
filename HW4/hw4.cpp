@@ -301,6 +301,21 @@ void Order(const string dishName){
     cout << "Enter the item number of the dish you would like to order: ";
     cin >> input;
 
+    // Check if input exists in the MenuItem table
+    string checkQuery = "SELECT EXISTS(SELECT 1 FROM MenuItem WHERE itemNo = " + input + ") AS `exists`";
+    try {
+        std::unique_ptr<sql::Statement> stmt(con->createStatement());
+        std::unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(checkQuery));
+        if (resultSet->next()) {
+            if (resultSet->getInt("exists") == 0) {
+                cout << "Invalid item number. Please try again." << endl;
+                return;
+            }
+        }
+    } catch (sql::SQLException &e) {
+        cout << "SQL Exception: " << e.what() << endl;
+    }
+
     
     auto now = chrono::system_clock::now();
     auto in_time_t = chrono::system_clock::to_time_t(now);
