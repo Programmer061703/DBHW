@@ -71,13 +71,13 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
                 cout << "Enter restaurant name: ";
                 getline(cin, restaurantName); 
-                if(!check.restaurantExists(restaurantName)) {
+                if(!checkRestaurantExists(restaurantName)) {
                     cout << "Restaurant does not exist." << endl;
                     break;
                 }
                 cout << "Enter city: ";
                 getline(cin, city); 
-                if(!check.cityExists(city)) {
+                if(!checkCityExists(city)) {
                     cout << "City does not exist." << endl;
                     break;
                 }
