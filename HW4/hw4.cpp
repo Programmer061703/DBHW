@@ -414,7 +414,8 @@ void newDish(){
 
     
 
-    string l = "INSERT INTO Dish VALUES (" + dishNo + ", " + dishName + ", " + dishType + ")";
+   string l = "INSERT INTO Dish VALUES (" + dishNo + ", '" + dishName + "', '" + dishType + "')";
+
     
     query(l);
     
