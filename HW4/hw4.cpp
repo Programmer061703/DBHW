@@ -355,6 +355,9 @@ void removeOrder(int orderNo){
     string q = "DELETE FROM FoodOrder WHERE orderNo = " + to_string(orderNo);
     query(q);
 
+    string s = "SELECT * FROM FoodOrder";
+    query(s);
+
 }
 
 
