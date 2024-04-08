@@ -136,8 +136,6 @@ int main()
             case 5: {
                 // Add a new dish for a restaurant
                 newDish();
-
-
                 break;
             }
             case 6: {
@@ -297,6 +295,9 @@ void findMenuItemsByRestaurantAndCity(const string& restaurantName, const string
 }
 
 void Order(const string dishName){
+
+    string dis = "SELECT * FROM Dish";
+    query(dis);
     string q = "SELECT MI.itemNo, R.restaurantName, R.city, MI.price "
                "FROM MenuItem MI "
                "JOIN Dish D ON MI.dishNo = D.dishNo "
