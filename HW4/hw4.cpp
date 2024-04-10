@@ -43,10 +43,11 @@ bool checkRestaurantExists(const string& restaurantName);
 bool checkCityExists(const string& city);
 bool checkOrderExists(int orderNo);
 bool checkDishExists(const string& dishName);
-bool itemExists(int itemNo, const string& dishName);
+bool checkItemExists(int itemNo, const string& dishName);
 bool checkDishNoExists(const string& dishNo);
 int getMostRecentItemNo();
 void newDish();   
+bool checkDishInMenuItems(const string& dishName);
 
 
  
@@ -96,10 +97,9 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
                 cout << "Enter dish name: ";
 
-
-                getline(cin, dishName);
-                if(!checkDishExists(dishName)) {
-                    cout << "Dish does not exist." << endl;
+                getline(cin,dishName);
+                if(!checkDishInMenuItems(dishName)){
+                    cout << "Dish Does not exist in MenuItems"<<endl;
                     break;
                 }
                 Order(dishName);
@@ -311,7 +311,7 @@ void Order(const string dishName){
     cout << "Enter the item number of the dish you would like to order: ";
     cin >> input;
 
-    if(!itemExists(stoi(input),dishName)) {
+    if(!checkItemExists(stoi(input),dishName)) {
                     cout << "Order does not exist." << endl;
                     return;
     }
@@ -567,7 +567,7 @@ bool checkDishExists(const string& dishName) {
     return exists;
 }
 
-bool itemExists(int itemNo, const string& dishName) {
+bool checkItemExists(int itemNo, const string& dishName) {
     string query = "SELECT EXISTS("
                             "SELECT 1 "
                             "FROM MenuItem MI "
@@ -585,3 +585,38 @@ bool itemExists(int itemNo, const string& dishName) {
     }
     return false;
 }
+
+bool checkDishInMenuItems(const string& dishName) {
+    // Find the dishNo for the given dishName
+    int dishNo = -1; 
+    try {
+        unique_ptr<sql::PreparedStatement> pstmtFindDish(con->prepareStatement("SELECT dishNo FROM Dish WHERE dishName = ?"));
+        pstmtFindDish->setString(1, dishName);
+        unique_ptr<sql::ResultSet> resDish(pstmtFindDish->executeQuery());
+        
+        if (resDish->next()) {
+            dishNo = resDish->getInt("dishNo");
+        } else {
+            cout << "Dish not found: " << dishName << endl;
+            return false; 
+        }
+    } catch (sql::SQLException& e) {
+        cout << "SQL Exception when finding dishNo: " << e.what() << endl;
+        return false;
+    }
+    // Step 2: Check if the found dishNo exists in MenuItem table
+    try {
+        unique_ptr<sql::PreparedStatement> pstmtCheckItem(con->prepareStatement("SELECT EXISTS(SELECT 1 FROM MenuItem WHERE dishNo = ?) AS 'exists'"));
+        pstmtCheckItem->setInt(1, dishNo);
+        unique_ptr<sql::ResultSet> resItem(pstmtCheckItem->executeQuery());
+        
+        if (resItem->next()) {
+            return resItem->getBoolean("exists");
+        }
+    } catch (sql::SQLException& e) {
+        cout << "SQL Exception when checking MenuItem: " << e.what() << std::endl;
+    }
+
+    return false; 
+}
+
