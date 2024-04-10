@@ -61,7 +61,7 @@ int main()
     int selection;
     string restaurantName, city, dishName, orderNo;
     initDatabase(Username, mysqlPassword, Username); //init and testing - use it to enter your queries
-    string dis = "SELECT * FROM Dish";
+    string dis = "SELECT * FROM FoodOrder";
 
     while (x != 1) {
         menu();
