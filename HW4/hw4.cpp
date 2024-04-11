@@ -316,12 +316,6 @@ void Order(const string dishName){
                     return;
     }
 
-
-
-    
-    
-
-    
     auto now = chrono::system_clock::now();
     auto in_time_t = chrono::system_clock::to_time_t(now);
     stringstream ssDate, ssTime;
@@ -395,13 +389,18 @@ query(displayResPri);
     
     cout << "Enter Dish You Would Like to Add: ";
     getline(cin, dishName);
+    if(!checkDishExists(dishName)) {
+        cout << "City does not exist." << endl;
+        return;
+    }
+
 
     cout << "Enter Type of Dish (ap = Appetizer, en = Entree, ds = Dessert): "; 
     getline(cin, dishType);
 
     cout << "Enter Price of Dish: ";
     getline(cin, dishPrice);
-
+    
 
     string r = "SELECT * FROM Dish";
     query(r);
@@ -490,6 +489,22 @@ bool checkDishNoExists(const string& dishNo){
     bool exists = false;
     string query = "SELECT EXISTS(SELECT 1 FROM Dish WHERE dishNo = " 
                     + dishNo + ") AS `exists`";
+    try {
+        unique_ptr<sql::Statement> stmt(con->createStatement());
+        unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
+        if (resultSet->next()) {
+            exists = resultSet->getInt("exists") == 1;
+        }
+    } catch (sql::SQLException &e) {
+        cout << "SQL Exception: " << e.what() << endl;
+    }
+    return exists;
+
+}
+bool checkDishNameExists(const string& dishName){
+    bool exists = false;
+    string query = "SELECT EXISTS(SELECT 1 FROM Dish WHERE dishName = " 
+                    + dishName + ") AS `exists`";
     try {
         unique_ptr<sql::Statement> stmt(con->createStatement());
         unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
