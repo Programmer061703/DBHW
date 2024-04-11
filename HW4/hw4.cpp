@@ -48,6 +48,7 @@ bool checkDishNoExists(const string& dishNo);
 int getMostRecentItemNo();
 void newDish();   
 bool checkDishInMenuItems(const string& dishName);
+bool checkDishNameExists(const string& dishName);
 
 
  
@@ -389,8 +390,8 @@ query(displayResPri);
     
     cout << "Enter Dish You Would Like to Add: ";
     getline(cin, dishName);
-    if(!checkDishExists(dishName)) {
-        cout << "City does not exist." << endl;
+    if(checkDishExists(dishName)) {
+        cout << "Dish already added." << endl;
         return;
     }
 
@@ -503,8 +504,8 @@ bool checkDishNoExists(const string& dishNo){
 }
 bool checkDishNameExists(const string& dishName){
     bool exists = false;
-    string query = "SELECT EXISTS(SELECT 1 FROM Dish WHERE dishName = " 
-                    + dishName + ") AS `exists`";
+    string query = "SELECT EXISTS(SELECT 1 FROM Restaurant WHERE dishName = '" 
+                    + dishName + "') AS `exists`";
     try {
         unique_ptr<sql::Statement> stmt(con->createStatement());
         unique_ptr<sql::ResultSet> resultSet(stmt->executeQuery(query));
