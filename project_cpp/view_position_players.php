@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>View Players on a Team</title>
+<title>View Players by Position</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -43,34 +43,28 @@
 </style>
 </head>
 <body>
-<h2>View Players on a Team</h2>
+<h2>View Players by Position</h2>
 
-<form action="" method="post"> <!-- action attribute is now empty -->
-    <label for="teamName">Team Name:</label>
-    <input type="text" id="teamName" name="teamName" required>
+<form action="" method="post">
+    <label for="position">Enter Position:</label>
+    <input type="text" id="position" name="position" required>
     <input type="submit" name="submit" value="View Players">
 </form>
 
 <?php
 if (isset($_POST['submit'])) {
-    $teamName = escapeshellarg($_POST['teamName']); // Secure the team name for the shell command
+    $position = escapeshellarg($_POST['position']); // Secure the position for the shell command
 
-    // Correct the command concatenation
-    $command = '/home/brw020/public_html/project_cpp/view_players.exe ' . $teamName; // Added a space before concatenating teamName
-
-    // Display the command for debugging (optional)
-    echo '<p>Command: ' . htmlspecialchars($command) . '</p>';
+    // Build the command to execute the external .exe file
+    $command = '/path/to/your/executable/view_players_by_position.exe ' . $position;
 
     // Sanitize the command to prevent injection attacks
     $command = escapeshellcmd($command);
 
     // Execute the command and output directly to the page
-    system($command);
+    system($command);  
 }
 ?>
 
 </body>
 </html>
-
-
-
