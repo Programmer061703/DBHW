@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
     $position = escapeshellarg($_POST['position']);
 
     // Build the command
-    $command = '/home/brw020/public_html/project_cpp/add_player.exe ' . $teamId . ' ' . $name . ' ' . $position;
+    $command = '/home/brw020/public_html/project_cpp/add_player.exe' . $teamId . ' ' . $name . ' ' . $position;
 
     // Display the command for debugging (optional)
     echo '<p>Command: ' . htmlspecialchars($command) . '</p>';
