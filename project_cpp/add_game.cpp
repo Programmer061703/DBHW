@@ -19,25 +19,27 @@ int main(int argc, char *argv[])
     builder.append("<br><br><br> Game table before:" + myDB.query(query1) + "<br>");
     
     // Parse input string to get game details
-    string teamId1, teamId2, score1, score2, gameDate;
+    string teamId1, teamId2, score1, score2, gameDate,gameId;
 
     // Read command line arguments
     // First arg, argv[0], is the name of the program
     // Next args are the parameters
-    if (argc == 6) { // Ensure we have the correct number of parameters
-        teamId1 = argv[1];
-        teamId2 = argv[2];
-        score1 = argv[3];
-        score2 = argv[4];
-        gameDate = argv[5];
+    if (argc == 7) { // Ensure we have the correct number of parameters
+        gameId = argv[1];
+        teamId1 = argv[2];
+        teamId2 = argv[3];
+        score1 = argv[4];
+        score2 = argv[5];
+        gameDate = argv[6];
+        
     } else {
         cerr << "Invalid number of arguments. Expected 5 parameters." << endl;
         return 1;
     }
 
     // Prepare to insert the new game
-    string input = "'" + teamId1 + "','" + teamId2 + "','" + score1 + "','" + score2 + "','" + gameDate + "'";
-
+    string input = "'"+ gameId + "','" + teamId1 + "','" + teamId2 + "','" + score1 + "','" + score2 + "','" + gameDate + "'";
+   
     // Insert the new game
     myDB.insert("Game", input);    // insert new game
     
@@ -49,6 +51,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
-
-

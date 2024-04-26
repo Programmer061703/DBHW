@@ -21,17 +21,18 @@ int main(int argc, char *argv[])
     // Read command line arguments
     // First arg, arg[0], is the name of the program
     // Next args are the parameters
-    if (argc != 4) {
+    if (argc != 5) {
         cerr << "Usage: " << argv[0] << " TeamId Name Position" << endl;
         return 1;
     }
-    string teamId = argv[1];
-    string name = argv[2];
-    string position = argv[3];
+    string playerId = argv[1];
+    string teamId = argv[2];
+    string name = argv[3];
+    string position = argv[4];
 
     // Construct the input string for SQL INSERT statement
-    string input = "'" + teamId + "','" + name + "','" + position + "'";
-
+    string input = "'" + playerId + "','" + teamId + "','" + name + "','" + position + "'";
+    cout << input<<endl;
     // Insert the new player
     myDB.insert("Player", input);
  

@@ -147,6 +147,7 @@ string builder = "";
 void odbc_db::insert(string table, string values) 
 {
 string query = "INSERT into " + table + " values (" + values + ")";
+cout << query<< endl;
 
    statement->executeUpdate(query);
 }

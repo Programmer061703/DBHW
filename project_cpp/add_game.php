@@ -40,6 +40,9 @@
 <h2>Add a Game to the Database</h2>
 
 <form action="add_game.php" method="post">
+    <label for="gameId">Game Id:</label>
+    <input type="text" id="gameId" name="gameId"><br>
+
     <label for="teamId1">Team ID 1:</label>
     <input type="text" id="teamId1" name="teamId1"><br>
 
@@ -62,6 +65,7 @@
 <?php
 if (isset($_POST['submit'])) {
     // Escape the input to use as command line arguments
+    $gameId = escapeshellarg($_POST[gameId]);
     $teamId1 = escapeshellarg($_POST[teamId1]);
     $teamId2 = escapeshellarg($_POST[teamId2]);
     $score1 = escapeshellarg($_POST[score1]);
@@ -69,7 +73,7 @@ if (isset($_POST['submit'])) {
     $date = escapeshellarg($_POST[date]);
 
     // Build the command
-    $command = '/home/brw020/public_html/project_cpp/add_game.exe' . $teamId1 . ' ' . $teamId2 . ' ' . $score1 . ' ' . $score2 . ' ' . $date;
+    $command = '/home/brw020/public_html/project_cpp/add_game.exe '  .$gameId . ' '. $teamId1 . ' ' . $teamId2 . ' ' . $score1 . ' ' . $score2 . ' ' . $date;
 
     // Display the command for debugging
     echo '<p>Command: ' . $command . '</p>';

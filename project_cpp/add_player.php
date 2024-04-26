@@ -40,6 +40,10 @@
 <h2>Add a Player to the Database</h2>
 
 <form action="add_player.php" method="post">
+
+    <label for="playerId">Player ID:</label>
+    <input type="number" id="playerId" name="playerId" required><br>
+
     <label for="teamId">Team ID:</label>
     <input type="number" id="teamId" name="teamId" required><br>
 
@@ -55,12 +59,13 @@
 <?php
 if (isset($_POST['submit'])) {
     // Escape the input to use as command line arguments
+    $playerId = escapeshellarg($_POST['playerId']);
     $teamId = escapeshellarg($_POST['teamId']);
     $name = escapeshellarg($_POST['name']);
     $position = escapeshellarg($_POST['position']);
 
     // Build the command
-    $command = '/home/brw020/public_html/project_cpp/add_player.exe' . $teamId . ' ' . $name . ' ' . $position;
+    $command = '/home/brw020/public_html/project_cpp/add_player.exe ' .$playerId .' '. $teamId . ' ' . $name . ' ' . $position;
 
     // Display the command for debugging (optional)
     echo '<p>Command: ' . htmlspecialchars($command) . '</p>';

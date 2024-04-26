@@ -28,22 +28,23 @@ int main(int argc, char *argv[])
     string mysqlPassword = "ar6Phis7";  // Change to your MySQL password
     string SchemaName = "brw020"; // Change to your username
 
-    string position = argv[1];
+    string position;
 
     odbc_db myDB;
     myDB.Connect(Username, mysqlPassword, SchemaName);
+    myDB.initDatabase();
+
+    position = argv[1];
+    
 
     // SQL query to find players by position, with basic escaping
-    string safePosition = escapeSQL(position);
-    string query = "SELECT PlayerId, Name, TeamId FROM Player WHERE Position = '" + safePosition + "';";
+   
+    string query = "SELECT PlayerId, Name, TeamId FROM Player WHERE Position = '" + position + "';";
 
     // Execute the query and print the results
     string result = myDB.query(query);
     if (!result.empty()) {
-        cout << "<table border='1'>";
-        cout << "<tr><th>Player ID</th><th>Name</th><th>Team ID</th></tr>";
         cout << result;
-        cout << "</table>";
     } else {
         cout << "<p>No players found for position: " << position << "</p>";
     }

@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
     $position = escapeshellarg($_POST['position']); // Secure the position for the shell command
 
     // Build the command to execute the external .exe file
-    $command = '/path/to/your/executable/view_players_by_position.exe ' . $position;
+    $command = '/home/brw020/public_html/project_cpp/view_position_players.exe ' . $position;
 
     echo '<p>Command: ' . htmlspecialchars($command) . '</p>';
 
