@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>View Players by Position</title>
+<title>View Teams by Conference</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -43,20 +43,20 @@
 </style>
 </head>
 <body>
-<h2>View Players by Position</h2>
+<h2>View Teams by Conference</h2>
 
 <form action="" method="post">
-    <label for="position">Enter Position:</label>
-    <input type="text" id="position" name="position" required>
-    <input type="submit" name="submit" value="View Players">
+    <label for="conference">Enter Conference:</label>
+    <input type="text" id="conference" name="conference" required>
+    <input type="submit" name="submit" value="View Teams">
 </form>
 
 <?php
 if (isset($_POST['submit'])) {
-    $position = escapeshellarg($_POST['position']); // Secure the position for the shell command
+    $conference = escapeshellarg($_POST['conference']); // Secure the conference for the shell command
 
     // Build the command to execute the external .exe file
-    $command = '/path/to/your/executable/view_players_by_position.exe ' . $position;
+    $command = '/path/to/your/executable/view_teams_by_conference.exe ' . $conference;
 
     echo '<p>Command: ' . htmlspecialchars($command) . '</p>';
 
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
     $command = escapeshellcmd($command);
 
     // Execute the command and output directly to the page
-    system($command);  
+    system($command);
 }
 ?>
 
