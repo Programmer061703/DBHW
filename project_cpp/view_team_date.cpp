@@ -9,9 +9,9 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-string Username = "brw020";   // Change to your own username
-string mysqlPassword = "ar6Phis7";  // Change to your mysql password
-string SchemaName = "brw020"; // Change to your username
+string Username = "";   // Change to your own username
+string mysqlPassword = "";  // Change to your mysql password
+string SchemaName = ""; // Change to your username
 
    odbc_db myDB;
    myDB.Connect(Username, mysqlPassword, SchemaName);

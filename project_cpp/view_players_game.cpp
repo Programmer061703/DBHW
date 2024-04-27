@@ -14,9 +14,9 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    string Username = "brw020";   // Change to your own username
-    string mysqlPassword = "ar6Phis7";  // Change to your MySQL password
-    string SchemaName = "brw020"; // Change to your username
+    string Username = "";   // Change to your own username
+    string mysqlPassword = "";  // Change to your MySQL password
+    string SchemaName = ""; // Change to your username
 
     
 

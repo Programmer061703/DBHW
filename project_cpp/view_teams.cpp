@@ -10,9 +10,9 @@ int main()
 {
     
 
-    string Username = "brw020";
-    string mysqlPassword = "ar6Phis7";
-    string SchemaName = "brw020";
+    string Username = "";
+    string mysqlPassword = "";
+    string SchemaName = "";
 
 
     odbc_db myDB;
