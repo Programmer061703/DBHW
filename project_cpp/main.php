@@ -61,6 +61,14 @@
     <input type="submit" value="View Results by Date">
 </form>
 
+<form action="add_player_stats.php" method="post">
+    <input type="submit" value="Add Player Stats">
+</form>
+
+<form action="view_players_game.php" method="post">
+    <input type="submit" value="View Players Stats">
+</form>
+
 </body>
 </html>
 
