@@ -21,17 +21,23 @@ int main(int argc, char *argv[])
     // Read command line arguments
     // First arg, arg[0], is the name of the program
     // Next args are the parameters
-    if (argc != 5) {
+    if (argc != 4) {
         cerr << "Usage: " << argv[0] << " TeamId Name Position" << endl;
         return 1;
     }
-    string playerId = argv[1];
-    string teamId = argv[2];
-    string name = argv[3];
-    string position = argv[4];
+    
+    string teamId = argv[1];
+    string name = argv[2];
+    string position = argv[3];
+
+    string q = "select IFNULL(max(PlayerId), 0) as PlayerId from Player";
+    sql::ResultSet *result = myDB.rawQuery(q);
+        int next_id = 1;
+        if (result->next()) // get first row of result set
+            next_id += result->getInt("PlayerId");
 
     // Construct the input string for SQL INSERT statement
-    string input = "'" + playerId + "','" + teamId + "','" + name + "','" + position + "'";
+    string input = "'" + to_string(next_id) + "','" + teamId + "','" + name + "','" + position + "'";
     cout << input<<endl;
     // Insert the new player
     myDB.insert("Player", input);

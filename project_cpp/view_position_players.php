@@ -40,6 +40,11 @@
         text-align: left;
         border-bottom: 1px solid #ddd;
     }
+    .button-container {
+        
+        margin-top: 10px; 
+        text-align: center; 
+    }
 </style>
 </head>
 <body>
@@ -47,9 +52,26 @@
 
 <form action="" method="post">
     <label for="position">Enter Position:</label>
-    <input type="text" id="position" name="position" required>
+    <label for="position">Player Position:</label>
+    <select id="position" name="position" required>
+        <option value="Quarterback">Quarterback</option>
+        <option value="Running Back">Running Back</option>
+        <option value="Wide Receiver">Wide Receiver</option>
+        <option value="Tight End">Tight End</option>
+        <option value="Offensive Lineman">Offensive Lineman</option>
+        <option value="Defensive Tackle">Defensive Tackle</option>
+        <option value="Defensive End">Defensive End</option>
+        <option value="Linebacker">Linebacker</option>
+        <option value="Cornerback">Cornerback</option>
+        <option value="Safety">Safety</option>
+        <option value="Kicker">Kicker</option>
+        <option value="Punter">Punter</option>
+    </select><br>
     <input type="submit" name="submit" value="View Players">
 </form>
+<div class="button-container">
+    <a href="main.php" class="button">Return to Menu</a>
+</div>
 
 <?php
 if (isset($_POST['submit'])) {

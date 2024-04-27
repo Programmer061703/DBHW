@@ -40,23 +40,31 @@
         text-align: left;
         border-bottom: 1px solid #ddd;
     }
+    .button-container {
+        
+        margin-top: 10px; 
+        text-align: center; 
+    }
 </style>
 </head>
 <body>
 <h2>View Games by Team</h2>
 
 <form action="" method="post">
-    <label for="teamName">Enter Team Name:</label>
+    <label for="teamName">Enter Team Nickname:</label>
     <input type="text" id="teamName" name="teamName" required>
     <input type="submit" name="submit" value="View Games">
 </form>
+<div class="button-container">
+    <a href="main.php" class="button">Return to Menu</a>
+</div>
 
 <?php
 if (isset($_POST['submit'])) {
     $teamName = escapeshellarg($_POST['teamName']); // Secure the team name for the shell command
 
     // Build the command to execute the external .exe file
-    $command = '/path/to/your/executable/view_games_by_team.exe ' . $teamName;
+    $command = '/home/brw020/public_html/project_cpp/view_team_games.exe ' . $teamName;
 
     // Sanitize the command to prevent injection attacks
     $command = escapeshellcmd($command);

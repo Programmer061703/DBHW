@@ -40,23 +40,31 @@
         text-align: left;
         border-bottom: 1px solid #ddd;
     }
+    .button-container {
+        
+        margin-top: 10px; 
+        text-align: center; 
+    }
 </style>
 </head>
 <body>
 <h2>View Players on a Team</h2>
 
 <form action="" method="post"> <!-- action attribute is now empty -->
-    <label for="teamName">Team Name:</label>
+    <label for="teamName">Team Nickname:</label>
     <input type="text" id="teamName" name="teamName" required>
     <input type="submit" name="submit" value="View Players">
 </form>
+<div class="button-container">
+    <a href="main.php" class="button">Return to Menu</a>
+</div>
 
 <?php
 if (isset($_POST['submit'])) {
     $teamName = escapeshellarg($_POST['teamName']); // Secure the team name for the shell command
 
     // Correct the command concatenation
-    $command = '/home/brw020/public_html/project_cpp/view_players.exe ' . $teamName; // Added a space before concatenating teamName
+    $command = '/home/brw020/public_html/project_cpp/view_players.exe ' . $teamName; 
 
     // Display the command for debugging (optional)
     echo '<p>Command: ' . htmlspecialchars($command) . '</p>';

@@ -5,44 +5,42 @@
 
 using namespace std;
 
-// Simple function to escape single quotes in user input for SQL queries
-string escapeSQL(const string& input) {
-    string output = input;
-    // Replace single quotes with two single quotes for SQL escaping
-    size_t pos = 0;
-    while ((pos = output.find("'", pos)) != string::npos) {
-        output.replace(pos, 1, "''");
-        pos += 2; // Move past the inserted characters
-    }
-    return output;
-}
 
-int main(int argc, char *argv[])
+int main()
 {
-    if (argc != 2) {
-        cerr << "Usage: " << argv[0] << " <conference>" << endl;
-        return 1;
-    }
+    
 
     string Username = "brw020";
     string mysqlPassword = "ar6Phis7";
     string SchemaName = "brw020";
 
-    string conference = argv[1];
 
     odbc_db myDB;
     myDB.Connect(Username, mysqlPassword, SchemaName);
+    myDB.initDatabase();
 
-    string query = "SELECT TeamId, Location, Nickname FROM Team WHERE Conference = '" + escapeSQL(conference) + "' ORDER BY Location;";
+   
+
+    string query = "SELECT T.Conference, T.Nickname, T.Location, "
+                   "COUNT(CASE WHEN (G.TeamId1 = T.TeamId AND G.Score1 > G.Score2) OR "
+                   "(G.TeamId2 = T.TeamId AND G.Score2 > G.Score1) THEN 1 ELSE NULL END) AS TotalWins, "
+                   "COUNT(CASE WHEN ((G.TeamId1 = T.TeamId AND G.Score1 > G.Score2) OR "
+                   "(G.TeamId2 = T.TeamId AND G.Score2 > G.Score1)) AND "
+                   "T1.Conference = T2.Conference THEN 1 ELSE NULL END) AS ConferenceWins "
+                   "FROM Team T "
+                   "LEFT JOIN Game G ON T.TeamId = G.TeamId1 OR T.TeamId = G.TeamId2 "
+                   "LEFT JOIN Team T1 ON G.TeamId1 = T1.TeamId "
+                   "LEFT JOIN Team T2 ON G.TeamId2 = T2.TeamId "
+                   "GROUP BY T.TeamId, T.Conference, T.Nickname, T.Location "
+                   "ORDER BY T.Conference ASC, TotalWins DESC, ConferenceWins DESC;";
+
     string result = myDB.query(query);
 
     if (!result.empty()) {
-        cout << "<table border='1'>";
-        cout << "<tr><th>Team ID</th><th>Location</th><th>Nickname</th></tr>";
         cout << result;
-        cout << "</table>";
+      
     } else {
-        cout << "<p>No teams found for conference: " << conference << "</p>";
+        cout << "<p>No teams found for conference: "<<endl;
     }
 
     myDB.disConnect();

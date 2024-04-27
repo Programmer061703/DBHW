@@ -1,66 +1,55 @@
-/* Compile using:
-g++ -Wall -I/usr/include/cppconn -o odbc odbc_insert_restaurant.cpp -L/usr/lib -lmysqlcppconn 
-run: 
-./odbc */
 #include "odbc_db.h"
 #include <iostream>
 #include <string>
+#include <algorithm>
+
 using namespace std;
+
 
 int main(int argc, char *argv[])
 {
-string Username = "brw020";   // Change to your own username
-string mysqlPassword = "ar6Phis7";  // Change to your mysql password
-string SchemaName = "brw020"; // Change to your username
+    if (argc != 2) {
+        cerr << "Usage: " << argv[0] << " <conference>" << endl;
+        return 1;
+    }
 
-   odbc_db myDB;
-   myDB.Connect(Username, mysqlPassword, SchemaName);
-   myDB.initDatabase();
- 
-   string builder = "";
- 
+    string Username = "brw020";
+    string mysqlPassword = "ar6Phis7";
+    string SchemaName = "brw020";
+
+
+    odbc_db myDB;
+    myDB.Connect(Username, mysqlPassword, SchemaName);
+    myDB.initDatabase();
+
+   string TeamName;
+
    
-   string date;
+   TeamName = argv[1];
 
-   // Read command line arguments
-   // First arg, arg[0] is the name of the program
-   // Next args are the parameters
-   date = argv[1];
+    string input = "SELECT T1.Location AS Team1Location, T1.Nickname AS Team1Name, "
+                   "T2.Location AS Team2Location, T2.Nickname AS Team2Name, G.Date, "
+                   "CONCAT(G.Score1, '-', G.Score2) AS Score, "
+                   "CASE WHEN (T1.Nickname = '" + TeamName + "' AND G.Score1 > G.Score2) OR "
+                   "(T2.Nickname = '" + TeamName + "' AND G.Score2 > G.Score1) THEN 'Won' "
+                   "WHEN (T1.Nickname = '" + TeamName + "' AND G.Score1 < G.Score2) OR "
+                   "(T2.Nickname = '" + TeamName + "' AND G.Score2 < G.Score1) THEN 'Lost' "
+                   "ELSE 'Draw' END AS Result "
+                   "FROM Game G JOIN Team T1 ON G.TeamId1 = T1.TeamId "
+                   "JOIN Team T2 ON G.TeamId2 = T2.TeamId "
+                   "WHERE T1.Nickname = '" + TeamName + "' OR T2.Nickname = '" + TeamName + "';";
 
-   string q = "SELECT g.Location AS game_location, "
-      "CASE "
-      "    WHEN g.Score1 > g.Score2 THEN t1.Nickname "
-      "    WHEN g.Score2 > g.Score1 THEN t2.Nickname "
-      "    ELSE 'Tie' "
-      "END AS winner_name, "
-      "CASE "
-      "    WHEN g.Score1 > g.Score2 THEN g.Score1 "
-      "    WHEN g.Score2 > g.Score1 THEN g.Score2 "
-      "    ELSE g.Score1 "
-      "END AS winning_score, "
-      "CASE "
-      "    WHEN g.Score1 < g.Score2 THEN t1.Nickname "
-      "    WHEN g.Score2 < g.Score1 THEN t2.Nickname "
-      "    ELSE 'Tie' "
-      "END AS loser_name, "
-      "CASE "
-      "    WHEN g.Score1 < g.Score2 THEN g.Score1 "
-      "    WHEN g.Score2 < g.Score1 THEN g.Score2 "
-      "    ELSE g.Score1 "
-      "END AS losing_score "
-      "FROM Game g "
-      "INNER JOIN Team t1 ON g.TeamId1 = t1.TeamId "
-      "INNER JOIN Team t2 ON g.TeamId2 = t2.TeamId "
-      "WHERE g.Date = '" + date + "';";
 
- 
-   //For debugging purposes: Show the database after insert
-   builder.append("<br><br><br> Table ITEM after:" + myDB.query(q));
-   cout << builder; 
-       
-   myDB.disConnect();//disconect Database
+  string result = myDB.query(input);
 
-   return 0;
+    if (!result.empty()) {
+        cout << result;
+      
+    } else {
+        cout << "<p>No teams found for conference: " << input << "</p>";
+    }
+
+    myDB.disConnect();
+
+    return 0;
 }
-
-

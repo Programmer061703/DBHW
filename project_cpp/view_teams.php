@@ -40,23 +40,30 @@
         text-align: left;
         border-bottom: 1px solid #ddd;
     }
+    .button-container {
+        
+        margin-top: 10px; 
+        text-align: center; 
+    }
 </style>
 </head>
 <body>
 <h2>View Teams by Conference</h2>
 
 <form action="" method="post">
-    <label for="conference">Enter Conference:</label>
-    <input type="text" id="conference" name="conference" required>
+    <label for="submit">Press to Search</label>
     <input type="submit" name="submit" value="View Teams">
 </form>
+<div class="button-container">
+    <a href="main.php" class="button">Return to Menu</a>
+</div>
 
 <?php
 if (isset($_POST['submit'])) {
     $conference = escapeshellarg($_POST['conference']); // Secure the conference for the shell command
 
     // Build the command to execute the external .exe file
-    $command = '/path/to/your/executable/view_teams_by_conference.exe ' . $conference;
+    $command = '/home/brw020/public_html/project_cpp/view_teams.exe ';
 
     echo '<p>Command: ' . htmlspecialchars($command) . '</p>';
 

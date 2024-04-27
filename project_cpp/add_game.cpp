@@ -24,21 +24,25 @@ int main(int argc, char *argv[])
     // Read command line arguments
     // First arg, argv[0], is the name of the program
     // Next args are the parameters
-    if (argc == 7) { // Ensure we have the correct number of parameters
-        gameId = argv[1];
-        teamId1 = argv[2];
-        teamId2 = argv[3];
-        score1 = argv[4];
-        score2 = argv[5];
-        gameDate = argv[6];
+    if (argc == 6) { // Ensure we have the correct number of parameters
+        teamId1 = argv[1];
+        teamId2 = argv[2];
+        score1 = argv[3];
+        score2 = argv[4];
+        gameDate = argv[5];
         
     } else {
         cerr << "Invalid number of arguments. Expected 5 parameters." << endl;
         return 1;
     }
+    string q = "select IFNULL(max(gameID), 0) as gameID from Game";
+    sql::ResultSet *result = myDB.rawQuery(q);
+        int next_id = 1;
+        if (result->next()) // get first row of result set
+            next_id += result->getInt("gameID");
 
     // Prepare to insert the new game
-    string input = "'"+ gameId + "','" + teamId1 + "','" + teamId2 + "','" + score1 + "','" + score2 + "','" + gameDate + "'";
+    string input = "'"+ to_string(next_id) + "','" + teamId1 + "','" + teamId2 + "','" + score1 + "','" + score2 + "','" + gameDate + "'";
    
     // Insert the new game
     myDB.insert("Game", input);    // insert new game
